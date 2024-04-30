@@ -84,7 +84,34 @@ Think of them as magic tools in your coding toolbox!
   - [Number to Binary](#number-to-binary)
   - [Strip bbcode](#strip-bbcode)
   - [Strip file paths](#strip-file-paths)
+- [TranslationWizard 🗺️](#translationwizard-️)
+  - [Shortcut functions](#shortcut-functions)
 - [VectorWizard ➖](#vectorwizard-)
+  - [Up direction opposite](#up-direction-opposite)
+  - [Generate random directions](#generate-random-directions)
+  - [Generate random angles](#generate-random-angles)
+  - [Generate random mesh surface position](#generate-random-mesh-surface-position)
+  - [Random position on circle](#random-position-on-circle)
+  - [Random point in Rect](#random-point-in-rect)
+  - [Translate axis to vector](#translate-axis-to-vector)
+  - [Normalization](#normalization)
+    - [Directions](#directions)
+    - [Angles](#angles-1)
+  - [Manhattan](#manhattan)
+  - [Chebysev](#chebysev)
+  - [Closest point on line](#closest-point-on-line)
+  - [Rotate randomly](#rotate-randomly)
+  - [Is Withing distance squared](#is-withing-distance-squared)
+  - [Direction from rotation](#direction-from-rotation)
+  - [Scale vector](#scale-vector)
+  - [Clamp vector](#clamp-vector)
+  - [Flip \& Reverse](#flip--reverse)
+  - [Topdown vector](#topdown-vector)
+  - [Side angles](#side-angles)
+  - [Position by polar coordinates](#position-by-polar-coordinates)
+    - [Examples](#examples)
+  - [Colors](#colors)
+  - [Polygon bounding box](#polygon-bounding-box)
 - [NodeWizard ⭕](#nodewizard-)
 
 # ArrayWizard
@@ -994,6 +1021,473 @@ Removes the bbcode tags for the given text.
 
 Removes any text starting with `"res://"` followed by one or more non-space characters.
 
+# TranslationWizard 🗺️
+
+This wizard acts as a container for accessing language information that you can implement in your game.
+
+The language data are accessed using the provided LANGUAGE enum as key:
+
+```swift
+enum LANGUAGES {
+	ENGLISH,
+	CZECH,
+	DANISH,
+	GERMAN,
+	GREEK,
+	ESPERANTO,
+	SPANISH,
+	FRENCH,
+	INDONESIAN,
+	ITALIAN,
+	LATVIAN,
+	POLISH,
+	PORTUGUESE_BRAZILIAN,
+	PORTUGUESE,
+	RUSSIAN,
+	CHINESE_SIMPLIFIED,
+	CHINESE_TRADITIONAL,
+	NORWEGIAN_BOKMAL,
+	HUNGARIAN,
+	ROMANIAN,
+	KOREAN,
+	TURKISH,
+	JAPANESE,
+	UKRAINIAN
+}
+
+const AVAILABLE_LANGUAGES = {
+	LANGUAGES.ENGLISH: ["en", "en_US", "English", "English"],
+	LANGUAGES.FRENCH: ["fr", "fr_FR", "Français", "French"],
+	LANGUAGES.CZECH: ["cs", "cs_CZ", "Czech", "Czech"],
+	LANGUAGES.DANISH: ["da", "da_DK", "Dansk", "Danish"],
+	LANGUAGES.GERMAN: ["de", "de_DE", "Deutsch", "German"],
+	LANGUAGES.GREEK: ["el", "el_GR", "Ελληνικά", "Greek"],
+	LANGUAGES.ESPERANTO: ["eo", "eo_UY", "Esperanto", "Esperanto"],
+	LANGUAGES.SPANISH: ["es", "es_ES", "Español", "Spanish"],
+	LANGUAGES.INDONESIAN: ["id", "id_ID", "Indonesian", "Indonesian"],
+	LANGUAGES.ITALIAN: ["it", "it_IT", "Italiano", "Italian"],
+	LANGUAGES.LATVIAN: ["lv", "lv_LV", "Latvian", "Latvian"],
+	LANGUAGES.POLISH: ["pl", "pl_PL", "Polski", "Polish"],
+	LANGUAGES.PORTUGUESE_BRAZILIAN: ["pt_BR", "pt_BR", "Português Brasileiro", "Brazilian Portuguese"],
+	LANGUAGES.PORTUGUESE: ["pt", "pt_PT", "Português", "Portuguese"],
+	LANGUAGES.RUSSIAN: ["ru", "ru_RU", "Русский", "Russian"],
+	LANGUAGES.CHINESE_SIMPLIFIED: ["zh_CN", "zh_CN", "简体中文", "Chinese Simplified"],
+	LANGUAGES.CHINESE_TRADITIONAL: ["zh_TW", "zh_TW", "繁體中文", "Chinese Traditional"],
+	LANGUAGES.NORWEGIAN_BOKMAL: ["nb", "nb_NO", "Norsk Bokmål", "Norwegian Bokmål"],
+	LANGUAGES.HUNGARIAN: ["hu", "hu_HU", "Magyar", "Hungarian"],
+	LANGUAGES.ROMANIAN: ["ro", "ro_RO", "Română", "Romanian"],
+	LANGUAGES.KOREAN: ["ko", "ko_KR", "한국어", "Korean"],
+	LANGUAGES.TURKISH: ["tr", "tr_TR", "Türkçe", "Turkish"],
+	LANGUAGES.JAPANESE: ["ja", "ja_JP", "日本語", "Japanese"],
+	LANGUAGES.UKRAINIAN: ["uk", "uk_UA", "Українська", "Ukrainian"]
+}
+```
+
+## Shortcut functions
+
+Each language data can be accesed by the corresponding function so for example If you want to access english or french:
+
+```swift
+TranslationWizard.english() // ["en", "en_US", "English", "English"]
+TranslationWizard.french() // ["fr", "fr_FR", "Français", "French"]
+```
+
 # VectorWizard ➖
+
+The `VectorWizard` static class provides a collection of commonly used vector methods that can simplify your everyday game development tasks. While it offers a wide range of functions, in-depth documentation might not be available for every method. However, the method names themselves are designed to be clear and descriptive.
+
+## Up direction opposite
+
+`static func up_direction_opposite_vector2(up_direction: Vector2) -> Vector2`
+
+This method calculates the opposite of a given upward direction vector in 2D space. For example, if your CharacterBody2D uses Vector2.UP as its up direction, the opposite would be Vector2.DOWN.
+
+This function is useful for applying gravity in the opposite direction of the player, allowing you to create inverted gravity or flipped worlds. Even when your player changes their up direction to `Vector2.DOWN`, this method will correctly return `Vector2.UP` so you can set gravity pulls player in that direction.
+
+`static func up_direction_opposite_vector3(up_direction: Vector3) -> Vector3`
+This method functions similarly to the `up_direction_opposite_vector2` but for 3D space. It takes a 3D up direction vector and returns its opposite. This is helpful for manipulating gravity and character movement in a 3D environment.
+
+```swift
+extends CharacterBody2D
+
+func apply_gravity() -> void:
+  // Let's take it for granted that the current up direction it's Vector2.UP
+    var gravity_force_dir := VectorWizard.up_direction_opposite_vector2(up_direction)
+  // Returns Vector2.DOWN, so the gravity force should be applied in this direction
+
+  // Do your gravity stuff...
+```
+
+## Generate random directions
+
+Generate a number of random directions defining the min and max angle ranges in degrees / radians from an origin Vector
+
+`static func generate_2d_random_directions_using_degrees(num_directions: int = 10, origin: Vector2 = Vector2.UP, min_angle: float = 0.0, max_angle: float = 360.0) -> Array[Vector2]`
+
+`static func generate_2d_random_directions_using_radians(num_directions: int = 10, origin: Vector2 = Vector2.UP, min_angle: float = 0.0, max_angle: float = 6.2831853072) -> Array[Vector2]`
+
+`static func generate_3d_random_directions_using_degrees(num_directions: int = 10, origin: Vector3 = Vector3.UP, min_angle: float = 0.0, max_angle: float = 360.0) -> Array[Vector3]`
+
+`static func generate_3d_random_directions_using_radians(num_directions: int = 10, origin: Vector3 = Vector3.UP, min_angle: float = 0.0, max_angle: float = 6.2831853072) -> Array[Vector3]`
+
+`static func generate_2d_random_direction() -> Vector2`
+
+Generates a random 2D direction vector with floating-point values representing a unit vector in space _(magnitude of 1)_.
+This function is useful for creating diverse movement directions or raycasts.
+
+`static func generate_2d_random_fixed_direction() -> Vector2`
+
+Generates a random 2D direction vector with integer values representing cardinal directions _(e.g., Vector2(1, 0), Vector2(0, -1))_ or other fixed directional combinations.
+This function can be used for grid-based movement or discrete directional checks.
+
+`static func generate_3d_random_direction() -> Vector3`
+
+Generates a random 3D direction vector with floating-point values representing a unit vector in space.
+This function is useful for creating random 3D movement directions or raycasts.
+
+`static func generate_3d_random_fixed_direction() -> Vector3`
+
+Generates a random 3D direction vector with integer values representing axes or other fixed directional combinations in 3D space _(e.g., Vector3(1, 0, 0), Vector3(0, 1, -1))_.
+This function can be used for checks or movement along specific axes or predefined directions.
+
+## Generate random angles
+
+Generates a random angle in radians within the specified range _(defaults to 0 to 2π)_ or _(defaults to 0 to 360 degrees)_
+
+`static func generate_random_angle_in_radians(min_angle: float = 0.0, max_angle: float = 6.2831853072) -> float`
+
+`static func generate_random_angle_in_degrees(min_angle: float = 0.0, max_angle: float = 360.0) -> float`
+
+## Generate random mesh surface position
+
+`static func generate_random_mesh_surface_position(target: MeshInstance3D) -> Vector3`
+
+Generate a random point in the mesh surface passed as parameter. If the MeshInstance3D does not have a MeshShape set, it returns `Vector3.ZERO`
+
+## Random position on circle
+
+`static func random_inside_unit_circle(position: Vector2, radius: float = 1.0)`
+
+This function generates a random position vector within a unit circle on provided radius centered at the provided position vector.
+
+**Use Case:** Imagine creating a particle effect that emits particles in random directions around a specific point. This function can be used to generate the initial positions for each particle within a circular area.
+
+`static func random_on_unit_circle(position: Vector2) -> Vector2`
+
+This function generates a random position vector on the edge _(or slightly inside)_ of a unit circle centered at the provided position vector. It's similar to `random_inside_unit_circle` but adds a random radius factor.
+
+**Use Case:** Imagine creating a visual effect that simulates fireflies flying around a specific location. This function can be used to generate random starting positions for the fireflies, potentially placing them slightly closer to the center or more spread out on the edge of the circle.
+
+`static func random_point_in_annulus(center, radius_small, radius_large) -> Vector2`
+
+Two concentric circles _(donut basically)_
+
+## Random point in Rect
+
+`static func random_point_in_rect(rect: Rect2) -> Vector2`
+
+Retrieves a random point inside a given Rect2
+
+## Translate axis to vector
+
+`static func translate_x_axis_to_vector(axis: float) -> Vector2`
+
+Converts a value from the horizontal axis of user input _(typically obtained using Input.get_axis("move_left", "move_right"))_ to a corresponding 2D direction vector. This function simplifies translating user input for horizontal movement into a usable direction vector.
+
+`static func translate_y_axis_to_vector(axis: float) -> Vector2`
+
+Converts a value from the vertical axis of user input _(typically obtained using Input.get_axis("move_up", "move_down"))_ to a corresponding 2D direction vector. This function simplifies translating user input for horizontal movement into a usable direction vector.
+
+## Normalization
+
+### Directions
+
+`static func normalize_vector2(value: Vector2) -> Vector2`
+
+`static func normalize_diagonal_vector2(direction: Vector2) -> Vector2`
+
+`static func is_diagonal_direction_v2(direction: Vector2) -> bool`
+
+`static func normalize_vector3(value: Vector3) -> Vector3`
+
+`static func normalize_diagonal_vector3(direction: Vector3) -> Vector3`
+
+`static func is_diagonal_direction_v3(direction: Vector3) -> bool`
+
+These functions normalize a given 2D or 3D vector while accounting for diagonal directions. While Godot provides a built-in `.normalized()` function for vector normalization, these functions potentially offer a more nuanced approach.
+
+The standard `.normalized()` function in Godot scales the vector to a magnitude (length) of 1. However, for diagonal vectors, it might not perfectly represent the intended unit vector along the diagonal.
+
+**_Only uses this if you need to take into account diagonal directions_**
+
+### Angles
+
+`static func normalize_degrees_angle(degrees_angle: float) -> float`
+
+`static func normalize_radian_angle(radian_angle: float) -> float`
+
+Angles in both degrees and radians are cyclical, meaning they repeat after a full circle.
+
+These functions are essential for game development because they ensure that angles are always interpreted within a specific range _(0 to 360 degrees or 0 to 2π radians)._
+
+```swift
+normalized_angle_degrees = VectorWizard.normalize_degrees_angle(450) // 90 degrees
+normalized_angle_degrees = VectorWizard.normalize_degrees_angle(-135) // 225 degrees
+
+normalized_angle_radians = VectorWizard.normalize_radian_angle(5 * PI) // 3.14159 (PI)
+normalized_angle_radians = VectorWizard.normalize_radian_angle(-2 * PI) // 6.28318 (TAU)
+```
+
+## Manhattan
+
+`static func distance_manhattan_v2(a: Vector2, b: Vector2) -> float`
+
+`static func  distance_manhattan_v3(a: Vector3, b: Vector3) -> float`
+
+`static func  length_manhattan_v2(a : Vector2) -> float`
+
+`static func  length_manhattan_v3(a : Vector3) -> float`
+
+Also known as the "city distance" or "L1 distance". It measures the distance between two points as the sum of the absolute differences of their coordinates in each dimension.
+
+**Explanation:** These functions calculate the Manhattan distance _(also known as L1 distance or city block distance)_ between two points. It represents the total distance traveled by moving horizontally and vertically along a grid, ignoring any diagonal movement.
+
+**Use Case:** Imagine a pathfinding algorithm on a grid-based map. Manhattan distance can be used to estimate the distance between two points on the grid, as movement is restricted to horizontal and vertical steps.
+
+## Chebysev
+
+`static func distance_chebyshev_v2(a: Vector2, b: Vector2) -> float`
+
+`static func distance_chebyshev_v3(a: Vector3, b: Vector3) -> float`
+
+`static func length_chebyshev_v2(a : Vector2) -> float`
+
+`static func length_chebyshev_v3(a : Vector3) -> float`
+
+Also known as the "chess distance" or "L∞ distance". It measures the distance between two points as the greater of the absolute differences of their coordinates in each dimension.
+
+**Explanation:** These functions calculate the Chebyshev distance (also known as L∞ distance or chessboard distance) between two points. It represents the maximum absolute difference of the coordinates between the points, similar to a king's movement in chess (only horizontal, vertical, or diagonal steps of one square).
+
+**Use Case:** Imagine a tower defense game where enemies can only move horizontally or vertically along pre-defined paths. Chebyshev distance can be used to determine the enemy's "attack range" based on the maximum distance they can travel in a single move.
+
+## Closest point on line
+
+`static func closest_point_on_line_clamped_v2(a: Vector2, b: Vector2, c: Vector2) -> Vector2`
+
+`static func closest_point_on_line_clamped_v3(a: Vector3, b: Vector3, c: Vector3) -> Vector3`
+
+**Explanation:** These functions calculate the closest point on a line segment _(defined by points a and b)_ to a third point c. Additionally, they clamp the result to ensure the closest point lies within the line segment _(between a and b)._
+
+**Use Case:** Imagine a character trying to navigate around an obstacle. This function can be used to find the closest point on the obstacle's edge _(line segment)_ that the character can reach from their current position (c).
+
+---
+
+`static func closest_point_on_line_v2(a: Vector2, b: Vector2, c: Vector2) -> Vector2`
+
+`static func closest_point_on_line_v3(a: Vector3, b: Vector3, c: Vector3) -> Vector3`
+
+`static func closest_point_on_line_normalized_v2(a: Vector2, b: Vector2, c: Vector2) -> float`
+
+`static func closest_point_on_line_normalized_v3(a: Vector3, b: Vector3, c: Vector3) -> float`
+
+This function is similar to the previous one but does not clamp the result. It calculates the closest point on the line segment defined by a and b to a third point c. It uses the same vector operations as the previous `closest_point_on_line_clamped_v2` function.
+
+**Explanation:** These functions are similar to the clamped versions, but they calculate the closest point on the line segment without clamping. The non-normalized versions return the actual vector representing the closest point, while the normalized versions might return a parameter along the line segment that represents the closest point.
+
+**Use Case:** Imagine a projectile being fired towards a moving target. These functions can be used to determine the point on the target's projected path _(line segment)_ that the projectile is most likely to collide with, even if the collision happens outside the actual line segment itself.
+
+---
+
+## Rotate randomly
+
+`static func rotate_horizontal_random(origin: Vector3 = Vector3.ONE) -> Vector3`
+
+`static func rotate_vertical_random(origin: Vector3 = Vector3.ONE) -> Vector3`
+
+These functions generate a random rotation around a specified axis.
+
+`rotate_horizontal_random` generates a random rotation around the Y-axis, while `rotate_vertical_random` generates a random rotation around the X-axis.
+
+The origin parameter allows you to specify the center of rotation _(defaults to Vector3.ONE, which represents the origin)_.
+
+**Use Case:** Imagine creating a dynamic light source that simulates a flickering torch or a spotlight with a slight wobble. You can leverage the `rotate_horizontal_random` and `rotate_vertical_random` functions to achieve this effect.
+
+## Is Withing distance squared
+
+`static func is_withing_distance_squared_v2(vector: Vector2, second_vector: Vector2, distance: float) -> bool`
+
+`static func is_withing_distance_squared_v3(vector: Vector3, second_vector: Vector3, distance: float) -> bool`
+
+**Explanation:** These functions perform a distance check between two vectors but use a squared distance comparison instead of calculating the actual distance. They determine if the squared distance between the `vector` and `second_vector` is less than or equal to the square of the provided distance.
+
+**Reason for Squared Distance:** Calculating the squared distance is computationally cheaper than calculating the actual distance using a square root operation. This can be beneficial for performance optimization when checking distances frequently.
+
+**Use Case:** Imagine having a large number of enemies in a game and needing to check if they are within a certain attack range of the player. Using is*withing_distance_squared can be more efficient than calculating the actual distance for each enemy, especially if the result *(being within range)\_ is only used for a binary decision _(attack or not)._
+
+**_Important Note:_**
+
+While using squared distances offers a performance benefit, keep in mind that it doesn't give you the actual distance between the points. If you need the actual distance for calculations or other purposes, you'll need to perform a square root operation on the result of `is_withing_distance_squared`
+
+## Direction from rotation
+
+`static func direction_from_rotation_v2(rotation: float) -> Vector2`
+
+`static func direction_from_rotation_v3(rotation: float) -> Vector3`
+
+`static func direction_from_rotation_degrees_v2(rotation_degrees: float) -> Vector2`
+
+`static func direction_from_rotation_degrees_v3(rotation_degrees: float) -> Vector3`
+
+**Explanation:** These functions take a rotation angle _(in radians)_ as input and return a corresponding direction vector. The specific direction calculation depends on the dimensionality _(2D or 3D)_ and the rotation convention used by your game engine _(e.g., Godot uses Z-axis for 2D rotations)_.
+
+**Use Case:** Imagine having a spaceship that can rotate freely. These functions can be used to convert the spaceship's current rotation angle _(obtained from its transform)_ into a direction vector representing the orientation it's facing. This direction vector can then be used for various purposes, such as applying thrust in the forward direction or firing projectiles in the direction the spaceship is facing.
+
+## Scale vector
+
+`static func scale_vector2(vector: Vector2, length: float) -> Vector2`
+
+`static func scale_vector3(vector: Vector3, length: float) -> Vector3`
+
+These functions **normalizes** and **scale** a given vector to a new specified length. You can use this functions for example to scale this direction vector to the player's movement speed, resulting in a final movement vector with the desired direction and speed _(magnitude)_
+
+```swift
+// An alternative approach for velocity = direction * speed
+velocity = VectorWizard.scale_vector2(direction, speed)
+```
+
+## Clamp vector
+
+`static func clamp_vector2(vector: Vector2, min_length: float, max_length: float)-> Vector2`
+
+`static func clamp_vector3(vector: Vector3, min_length: float, max_length: float)-> Vector3`
+
+These functions clamp the magnitude _(length)_ of a vector within a specified minimum and maximum range. Imagine having a force applied to an object, represented by a vector. You can use `clamp_vector` to restrict the force's magnitude to a specific range, preventing the object from accelerating too quickly.
+
+## Flip & Reverse
+
+This functions does not modify the original Vector.
+
+`static func flip_v2(vector: Vector2) -> Vector2`
+
+`static func flip_v3(vector: Vector3) -> Vector3`
+
+Flip the sign of the given vector
+
+```swift
+VectorWizard.flip_v2(Vector2(-1, 0)) // Vector2(1, 0)
+VectorWizard.flip_v3(Vector2(-1, 0, -1)) // Vector2(1, 0, 1)
+```
+
+`static func reverse_v2(vector: Vector2) -> Vector2`
+
+`static func reverse_v3(vector: Vector3) -> Vector3`
+
+Reverse the values from the given vector
+
+```swift
+VectorWizard.reverse_v2(Vector2(3, 5)) // Vector2(5, 3)
+VectorWizard.reverse_v3(Vector3(3, 5, 7)) // Vector2(7, 5, 3)
+```
+
+## Topdown vector
+
+Removes the y component from a Vector3 and return a new Vector2
+
+`static func get_topdown_vector(from_vector: Vector3) -> Vector2`
+
+```swift
+VectorWizard.get_top_down_vector(Vector3(100, 40, 150)) // Vector2(100, 150)
+```
+
+Many games utilize a top-down perspective, where the camera looks down on the game world from above.
+
+This function can be used to convert 3D positions of objects _(represented by Vector3)_ to their corresponding 2D coordinates on the screen _(represented by Vector2)._
+
+By ignoring the y-component _(height)_ of the `Vector3`, the function effectively projects the object's position onto the top-down plane, which is crucial for rendering and gameplay logic in such games.
+
+Overall, this function provides a convenient way to extract relevant 2D information from 3D data, making it a valuable tool for various game development tasks involving top-down perspectives, 2D physics, UI positioning, and pathfinding.
+
+## Side angles
+
+`static func side_angle_by_angles(start_rad_angle: float, end_rad_angle: float)`
+
+`static func side_angle_by_vectors(vector_start, vector_end)`
+
+These functions essentially calculate the angle formed by two sides in 2D space, given either the angles of the sides or their unit vectors.
+
+This functionality is highly useful in various game development scenarios:
+
+- **Character Movement and Direction:**
+  Calculating the angle between a character's facing direction and a target object can be used for aiming, movement control, and pathfinding.
+- **Collision Detection:**
+  Determining the angle of impact between two colliding objects can be crucial for calculating accurate collision responses and physics interactions.
+- **Camera Orientation:**
+  Calculating the angle between the camera's current orientation and a point of interest can be used for smooth camera movements and tracking.
+- **Field of View Calculations:**
+  Determining the angle between the edges of a character's field of view can be used for visibility checks and awareness mechanics
+
+## Position by polar coordinates
+
+`static func get_position_by_polar_coordinates_v2(center_position: Vector2, angle_radians: float, radius: float) -> Vector2`
+
+`static func get_position_by_polar_coordinates_v3(center_position: Vector3, angle_radians: float, radius: float) -> Vector3`
+
+Both functions take three arguments:
+
+- `center_position`: A Vector2 or Vector3 representing the center point around which the position will be calculated.
+- `angle_radians`: The angle in radians specifying the direction from the center point.
+- `radius`: The distance from the center point along the specified angle.
+
+### Examples
+
+**Projectile Trajectory**
+
+```swift
+// Define launch parameters
+var center_position = Vector2(0, 0)  // Center of the launch point
+var angle_radians = PI / 4  // Launch angle in radians (45 degrees)
+var initial_velocity = 10.0  // Initial velocity of the projectile
+
+// Calculate position after 1.2 second
+var time_step = 1.2
+var radius = initial_velocity * time_step
+
+var projectile_position = get_position_by_polar_coordinates_v2(center_position, angle_radians, radius)
+
+print("Projectile position after 1.2s :", projectile_position)
+```
+
+**Camera position around a Target (3D)**
+
+```swift
+// Define target position and camera parameters
+var target_position = Vector3(10, 5, 2)  // Target object's position
+var angle_radians = PI / 4  // Camera angle around the target (45 degrees)
+var distance = 5.0  // Distance of the camera from the target
+
+var camera_position = get_position_by_polar_coordinates_v3(target_position, angle_radians, distance)
+
+print("Camera position: ", camera_position)
+```
+
+## Colors
+
+`static func color_from_vector(vec) -> Color`
+
+Returns a Color class from the given Vector _(Vector3 or Vector4)_
+
+`static func vec3_from_color_rgb(color: Color) -> Vector3`
+
+`static func vec3_from_color_hsv(color: Color) -> Vector3`
+
+Return a Vector3 from a Color value in both RGB and HSV
+
+A common use case it's convert color data from textures or materials into vector representations for calculations or manipulation.
+
+## Polygon bounding box
+
+`static func polygon_bounding_box(polygon: PackedVector2Array) -> Rect2`
+
+Takes a `PackedVector2Array` as input, which represents a polygon defined by an array of 2D vectors _(points)_. The function's purpose is to calculate the bounding box rectangle that encloses the entire polygon.
 
 # NodeWizard ⭕
