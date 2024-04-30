@@ -4,7 +4,7 @@ Existing issues marked with a [help wanted tag](https://github.com/ninetailsrabb
 
 ## Reporting bugs
 
-1. **[Follow the template for bug reports.](https://github.com/ninetailsrabbit/GodotWizards/issues/new?labels=bug&template=bug-report.md)**
+1. **[Follow the template for bug reports.](https://github.com/ninetailsrabbit/GodotWizards/issues/new?assignees=ninetailsrabbit&labels=%F0%9F%90%9B+bug&projects=&template=bug_report.md&title)**
 2. **Golden rule** Open _one_ ussie for _one_ bug .
 3. [Search for existing reports first.](https://github.com/ninetailsrabbit/GodotWizards/issues) If you found a similar issue in the tracker - better share your problem in the existing thread.
 4. Besides the platform, specify as many specifics as you can _(if relevant)_. CPU/GPU, input methods _(controller, mouse)_ and so on.
@@ -12,7 +12,7 @@ Existing issues marked with a [help wanted tag](https://github.com/ninetailsrabb
 
 ## Proposing features
 
-1. **[Follow the template for feature requests.](https://github.com/ninetailsrabbit/GodotWizards/issues/new?labels=enhancement&template=feature-request.md)**
+1. **[Follow the template for feature requests.](https://github.com/ninetailsrabbit/GodotWizards/issues/new?assignees=ninetailsrabbit&labels=%E2%AD%90+feature&projects=&template=feature_request.md&title)**
 2. [Search for existing proposals first.](https://github.com/ninetailsrabbit/GodotWizards/issues)
 3. Request something with a real-world use-case. Abstract features may not be considered.
 4. If you are capable of implementing said feature, include some code that demonstrates the finer details/nuances of said feature.
