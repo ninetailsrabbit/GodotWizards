@@ -25,129 +25,361 @@ Feel free to take what you need from this collection, as it's not designed to be
 
 It's not a traditional, structured addon, but rather a set of helper functions that can be useful even for a single function within your project.
 
-- [ArrayWizard 🔲](#arraywizard-)
-  - [Flatten](#flatten)
-  - [Pick random values](#pick-random-values)
-  - [Remove duplicates](#remove-duplicates)
-  - [Remove falsy values](#remove-falsy-values)
-  - [Middle element](#middle-element)
-- [DictWizard 📗](#dictwizard-)
-  - [Reverse key-value](#reverse-key-value)
-  - [Merge recursive](#merge-recursive)
-- [BBcodeWizard](#bbcodewizard)
-- [CameraWizard 📹](#camerawizard-)
-  - [Center origin](#center-origin)
-  - [Forward direction](#forward-direction)
-  - [Get Camera2D Frame](#get-camera2d-frame)
-- [FileWizard 🗃](#filewizard-)
-  - [File path is valid](#file-path-is-valid)
-  - [Directory path is valid](#directory-path-is-valid)
-  - [Directory exist on executable path](#directory-exist-on-executable-path)
-  - [Get files recursive](#get-files-recursive)
-  - [Remove files recursive](#remove-files-recursive)
-  - [Get .pck files](#get-pck-files)
-  - [Load CSV/TSV](#load-csvtsv)
-    - [How to use](#how-to-use-1)
-- [InputWizard 🎮](#inputwizard-)
-  - [Mouse](#mouse)
-  - [Keyboard](#keyboard)
-  - [Gamepad](#gamepad)
-  - [Actions](#actions)
-- [MathWizard 🧮](#mathwizard-)
-  - [Access to universal constants](#access-to-universal-constants)
-  - [Probability](#probability)
-    - [Spread](#spread)
-    - [Chance](#chance)
-    - [Random byte](#random-byte)
-    - [Bias](#bias)
-    - [Sigmoid](#sigmoid)
-  - [Factorials](#factorials)
-  - [Quartenion to axis angle](#quartenion-to-axis-angle)
-  - [Roman numbers](#roman-numbers)
-  - [Hexadecimal](#hexadecimal)
-  - [Value between](#value-between)
-  - [Thousands separator](#thousands-separator)
-  - [Big round](#big-round)
-  - [Average](#average)
-  - [Areas \& Volumes](#areas--volumes)
-  - [Angles](#angles)
-  - [Segment circle intersects](#segment-circle-intersects)
-  - [Segment Rect intersects](#segment-rect-intersects)
-  - [Rect difference](#rect-difference)
-- [StringWizard 🔤](#stringwizard-)
-  - [Access to common constants](#access-to-common-constants)
-  - [Format time](#format-time)
-  - [URL is valid](#url-is-valid)
-  - [Generate random string](#generate-random-string)
-  - [Snake to camel case](#snake-to-camel-case)
-  - [Camel to snake case](#camel-to-snake-case)
-  - [Clean](#clean)
-  - [Wrap text](#wrap-text)
-  - [Integer to ordinal](#integer-to-ordinal)
-  - [Pretty number](#pretty-number)
-  - [Number to Binary](#number-to-binary)
-  - [Strip bbcode](#strip-bbcode)
-  - [Strip file paths](#strip-file-paths)
-- [TranslationWizard 🗺️](#translationwizard-️)
-  - [Shortcut functions](#shortcut-functions)
-- [VectorWizard ➖](#vectorwizard-)
-  - [Up direction opposite](#up-direction-opposite)
-  - [Generate random directions](#generate-random-directions)
-  - [Generate random angles](#generate-random-angles)
-  - [Generate random mesh surface position](#generate-random-mesh-surface-position)
-  - [Random position on circle](#random-position-on-circle)
-  - [Random point in Rect](#random-point-in-rect)
-  - [Translate axis to vector](#translate-axis-to-vector)
-  - [Normalization](#normalization)
-    - [Directions](#directions)
-    - [Angles](#angles-1)
-  - [Manhattan](#manhattan)
-  - [Chebysev](#chebysev)
-  - [Closest point on line](#closest-point-on-line)
-  - [Rotate randomly](#rotate-randomly)
-  - [Is Withing distance squared](#is-withing-distance-squared)
-  - [Direction from rotation](#direction-from-rotation)
-  - [Scale vector](#scale-vector)
-  - [Clamp vector](#clamp-vector)
-  - [Flip \& Reverse](#flip--reverse)
-  - [Topdown vector](#topdown-vector)
-  - [Side angles](#side-angles)
-  - [Position by polar coordinates](#position-by-polar-coordinates)
-    - [Examples](#examples)
-  - [Colors](#colors)
-  - [Polygon bounding box](#polygon-bounding-box)
-- [NodeWizard ⭕](#nodewizard-)
-  - [Direction to](#direction-to)
-  - [Distance to](#distance-to)
-  - [Facing](#facing)
-  - [Search](#search)
-  - [Childrens](#childrens)
-    - [Get all childrens](#get-all-childrens)
-    - [Get last child](#get-last-child)
-    - [First child node in group](#first-child-node-in-group)
-    - [Group](#group)
-    - [Meta](#meta)
-  - [Ancestors](#ancestors)
-    - [Get all ancestors](#get-all-ancestors)
-  - [Visibility](#visibility)
-  - [Removal](#removal)
-    - [Remove](#remove)
-    - [Remove and queue free childrens](#remove-and-queue-free-childrens)
-  - [Editor](#editor)
-  - [Get tree depth](#get-tree-depth)
-  - [Get absolute Z index](#get-absolute-z-index)
-  - [Node validation](#node-validation)
-  - [Nearest \& Farthest](#nearest--farthest)
-  - [Screen](#screen)
-  - [UI node is hovered](#ui-node-is-hovered)
+- [General utilities 🧰](#general-utilities-)
+  - [Bitstream](#bitstream)
+  - [UUID](#uuid)
+  - [Utilities _(Autoload node)_](#utilities-autoload-node)
+    - [Slow or speed up time](#slow-or-speed-up-time)
+    - [Open external links](#open-external-links)
+    - [Random enum](#random-enum)
+    - [Mouse related](#mouse-related)
+    - [Random ID from Unix time](#random-id-from-unix-time)
+    - [Pausing](#pausing)
+    - [Detections](#detections)
+      - [Is mobile](#is-mobile)
+      - [Is multithreading enabled](#is-multithreading-enabled)
+    - [Texture dimensions](#texture-dimensions)
+    - [Sprite dimensions](#sprite-dimensions)
+    - [PNG Rect from Texture](#png-rect-from-texture)
+    - [Screenshot](#screenshot)
+    - [Compare colors](#compare-colors)
+    - [Delay function](#delay-function)
+- [Wizards](#wizards)
+  - [ArrayWizard 🔲](#arraywizard-)
+    - [Flatten](#flatten)
+    - [Pick random values](#pick-random-values)
+    - [Remove duplicates](#remove-duplicates)
+    - [Remove falsy values](#remove-falsy-values)
+    - [Middle element](#middle-element)
+  - [DictWizard 📗](#dictwizard-)
+    - [Reverse key-value](#reverse-key-value)
+    - [Merge recursive](#merge-recursive)
+  - [BBcodeWizard](#bbcodewizard)
+  - [CameraWizard 📹](#camerawizard-)
+    - [Center origin](#center-origin)
+    - [Forward direction](#forward-direction)
+    - [Get Camera2D Frame](#get-camera2d-frame)
+  - [FileWizard 🗃](#filewizard-)
+    - [File path is valid](#file-path-is-valid)
+    - [Directory path is valid](#directory-path-is-valid)
+    - [Directory exist on executable path](#directory-exist-on-executable-path)
+    - [Get files recursive](#get-files-recursive)
+    - [Remove files recursive](#remove-files-recursive)
+    - [Get .pck files](#get-pck-files)
+    - [Load CSV/TSV](#load-csvtsv)
+      - [How to use](#how-to-use-1)
+  - [InputWizard 🎮](#inputwizard-)
+    - [Mouse](#mouse)
+    - [Keyboard](#keyboard)
+    - [Gamepad](#gamepad)
+    - [Actions](#actions)
+  - [MathWizard 🧮](#mathwizard-)
+    - [Access to universal constants](#access-to-universal-constants)
+    - [Probability](#probability)
+      - [Spread](#spread)
+      - [Chance](#chance)
+      - [Random byte](#random-byte)
+      - [Bias](#bias)
+      - [Sigmoid](#sigmoid)
+    - [Factorials](#factorials)
+    - [Quartenion to axis angle](#quartenion-to-axis-angle)
+    - [Roman numbers](#roman-numbers)
+    - [Hexadecimal](#hexadecimal)
+    - [Value between](#value-between)
+    - [Thousands separator](#thousands-separator)
+    - [Big round](#big-round)
+    - [Average](#average)
+    - [Areas \& Volumes](#areas--volumes)
+    - [Angles](#angles)
+    - [Segment circle intersects](#segment-circle-intersects)
+    - [Segment Rect intersects](#segment-rect-intersects)
+    - [Rect difference](#rect-difference)
+  - [StringWizard 🔤](#stringwizard-)
+    - [Access to common constants](#access-to-common-constants)
+    - [Format time](#format-time)
+    - [URL is valid](#url-is-valid)
+    - [Generate random string](#generate-random-string)
+    - [Snake to camel case](#snake-to-camel-case)
+    - [Camel to snake case](#camel-to-snake-case)
+    - [Clean](#clean)
+    - [Wrap text](#wrap-text)
+    - [Integer to ordinal](#integer-to-ordinal)
+    - [Pretty number](#pretty-number)
+    - [Number to Binary](#number-to-binary)
+    - [Strip bbcode](#strip-bbcode)
+    - [Strip file paths](#strip-file-paths)
+  - [TranslationWizard 🗺️](#translationwizard-️)
+    - [Shortcut functions](#shortcut-functions)
+  - [VectorWizard ➖](#vectorwizard-)
+    - [Up direction opposite](#up-direction-opposite)
+    - [Generate random directions](#generate-random-directions)
+    - [Generate random angles](#generate-random-angles)
+    - [Generate random mesh surface position](#generate-random-mesh-surface-position)
+    - [Random position on circle](#random-position-on-circle)
+    - [Random point in Rect](#random-point-in-rect)
+    - [Translate axis to vector](#translate-axis-to-vector)
+    - [Normalization](#normalization)
+      - [Directions](#directions)
+      - [Angles](#angles-1)
+    - [Manhattan](#manhattan)
+    - [Chebysev](#chebysev)
+    - [Closest point on line](#closest-point-on-line)
+    - [Rotate randomly](#rotate-randomly)
+    - [Is Withing distance squared](#is-withing-distance-squared)
+    - [Direction from rotation](#direction-from-rotation)
+    - [Scale vector](#scale-vector)
+    - [Clamp vector](#clamp-vector)
+    - [Flip \& Reverse](#flip--reverse)
+    - [Topdown vector](#topdown-vector)
+    - [Side angles](#side-angles)
+    - [Position by polar coordinates](#position-by-polar-coordinates)
+      - [Examples](#examples)
+    - [Colors](#colors)
+    - [Polygon bounding box](#polygon-bounding-box)
+  - [NodeWizard ⭕](#nodewizard-)
+    - [Direction to](#direction-to)
+    - [Distance to](#distance-to)
+    - [Facing](#facing)
+    - [Search](#search)
+    - [Childrens](#childrens)
+      - [Get all childrens](#get-all-childrens)
+      - [Get last child](#get-last-child)
+      - [First child node in group](#first-child-node-in-group)
+      - [Group](#group)
+      - [Meta](#meta)
+    - [Ancestors](#ancestors)
+      - [Get all ancestors](#get-all-ancestors)
+    - [Visibility](#visibility)
+    - [Removal](#removal)
+      - [Remove](#remove)
+      - [Remove and queue free childrens](#remove-and-queue-free-childrens)
+    - [Editor](#editor)
+    - [Get tree depth](#get-tree-depth)
+    - [Get absolute Z index](#get-absolute-z-index)
+    - [Node validation](#node-validation)
+    - [Nearest \& Farthest](#nearest--farthest)
+    - [Screen](#screen)
+    - [UI node is hovered](#ui-node-is-hovered)
 
-# ArrayWizard 🔲
+# General utilities 🧰
+
+## Bitstream
+
+The BitStream class offers a powerful tool for working with data in a bit-oriented manner. It allows you to efficiently pack and unpack integer values and strings into a compact format, saving memory and potentially improving performance compared to traditional string storage.
+
+⚠️ **_This is not a static class, you need to instantiate a new class for each bitstream you want to manipulate._** ⚠️
+
+`push(value: int, range_max: int)`: Packs an integer value (value) within a specified range (range_max) into the bit stream, converting it into individual bits.
+
+`push_bit(bit: bool):` Appends a single bit _(True or False)_ to the bit stream.
+
+`pull(range_max:int)`: Reads and unpacks an integer value within a specified range (range_max) from the bit stream, interpreting the next num_bits as the value.
+
+`to_godot_string()`, `from_godot_string(string: String)`: Convert the bit stream to and from a Godot string format for basic data exchange.
+
+`pprint()`: Prints a human-readable representation of the bit stream as a sequence of 0s and 1s for debugging.
+
+`to_byte_array()`, `from_byte_array(byte_array: PackedByteArray)`: Convert the bit stream to and from a packed byte array for more advanced manipulation.
+
+`to_utf8()`, `from_utf8(utf8_string: String)`: Convert the bit stream to and from UTF-8 encoded text, allowing storage in a file or transmission over a network.
+
+`to_ascii_string()`, `from_ascii_string(string: String)`: Convert the bit stream to and from an ASCII string representation.
+from_string(string): Reads a string of 0s and 1s and interprets it as a bit stream, initializing the internal data.
+
+The BitStream can be used in a lot of places, here we provide a super minimal example but if you understand the concept you can easily transmit a lot of data via network using bitstreams instead of plain text
+
+**Here's the Godot script code example using the BitStream class for the multiplayer communication scenario:**
+
+`Server side`
+
+```bash
+extends Node
+
+var clients = {}  # Dictionary to store BitStream instances for connected clients
+
+func _on_player_connected(player_id):
+	clients[player_id] = BitStream.new()
+
+func _on_player_disconnected(player_id):
+	clients.erase(player_id)
+
+func _on_player_position_changed(player_id, position):
+	var bitstream = clients[player_id]
+	bitstream.push(position.x, 1024)
+	bitstream.push(position.y, 512)
+	# Send data to client (replace with your network communication method)
+	var data = bitstream.to_byte_array()
+	# ... send data to player_id ...
+
+func _on_player_health_changed(player_id, health):
+	var bitstream = clients[player_id]
+	bitstream.push(health, 256)
+	# Send data to client (replace with your network communication method)
+	var data = bitstream.to_byte_array()
+	# ... send data to player_id ..
+```
+
+`Client-Side`
+
+```bash
+extends Node
+
+var server_bitstream = BitStream.new()  # BitStream for receiving data from server
+
+func _on_server_data_received(data):
+	server_bitstream.from_byte_array(data)
+	var player_x = server_bitstream.pull(1024)
+	var player_y = server_bitstream.pull(512)
+	var player_health = server_bitstream.pull(256)
+	# Update player position and health based on received data
+	# ... update
+
+```
+
+## UUID
+
+The UUID class in Godot provides a convenient way to generate and manage Universally Unique Identifiers _(UUIDs)_. These identifiers are strings of characters that are highly likely to be unique, making them useful for various purposes in your game development.
+
+---
+
+- **Unique Identification:** Generates random UUIDs that are statistically improbable to clash with existing ones.
+- **Multiple Generation Options:** Offers two methods for creating UUIDs:
+
+---
+
+- `v4()`: Generates a version 4 UUID according to the standard format.
+
+- `v4_rng(rng: RandomNumberGenerator)`: Allows you to provide a custom random number generator for more control over the generation process.
+
+- `as_string()`: Easily convert the generated UUID to a human-readable string format
+
+- `as_array()`: Access the raw byte data of the UUID as an array
+
+- `is_equal(other)`: Check if two UUIDs are identical
+
+**Benefits for Users:**
+
+- **_Simplified Unique IDs:_** Assigning unique IDs to objects, resources, or network connections becomes easier.
+- **_Reduced Errors:_** Less chance of conflicts arising from duplicate IDs.
+- **_Flexibility:_** Choose between the standard generation method or provide a custom random number generator for specific needs.
+- **_Easy Integration:_** Convert the UUID to a string for display or transmit it as a byte array for internal processing.
+
+## Utilities _(Autoload node)_
+
+General utilities that does not belongs to a particular place, you can find here from freeze time to open external links safely.
+
+This node needs to be autoloaded to make it available globally, more information on the official documentation [Singletons autoload](https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html)
+
+### Slow or speed up time
+
+`func start_frame_freeze(time_scale: float, duration: float, scale_audio: bool = true) -> void`
+
+Start a frame freeze in the scene to simulate slow-motion effects. You can provide the time scale _(> 1 faster, < 1 slow)_ and the duration of the effect as well to decide if the audio will be scaled also.
+
+The signal `frame_freezed_started` and `frame_freezed_finished` are emitted in the process.
+
+### Open external links
+
+`func open_external_link(url: String) -> void`
+
+If the url is valid open a external link, when it detects that the current platform where is running the game is "Web" the url is encoded.
+
+### Random enum
+
+`func random_enum(_enum)`
+Returns a random enum value from the enum passed as parameter
+
+### Mouse related
+
+`func mouse_screen_position() -> Vector2`
+
+`func mouse_screen_relative_position() -> Vector2`
+
+`func mouse_position_from_center() -> Vector2`
+
+`func mouse_relative_from_center() -> Vector2`
+
+### Random ID from Unix time
+
+`func generate_random_id_from_unix_time()-> String`
+
+A lightweight function alternative to UUID that generates a random number using the current unix time to make it unique.
+
+### Pausing
+
+`func quit_game(exit_code: int = 0) -> void`
+
+On iOS this method doesn't work. Instead, as recommended by the iOS Human Interface Guidelines, the user is expected to close apps via the Home button
+
+`func pause_game() -> void`
+
+`func resume_game() -> void`
+
+### Detections
+
+#### Is mobile
+
+`func is_mobile() -> bool`
+
+Detect if the current platform where the game is running is a mobile.
+
+#### Is multithreading enabled
+
+`func is_multithreading_enabled() -> bool`
+
+### Texture dimensions
+
+`func get_texture_dimensions(texture: Texture2D) -> Rect2i`
+
+`func get_texture_rect_dimensions(texture_rect: TextureRect) -> Vector2`
+
+### Sprite dimensions
+
+`func get_sprite_dimensions(sprite: Sprite2D) -> Vector2`
+
+### PNG Rect from Texture
+
+`static func get_png_rect_from_texture(texture: Texture2D) -> Rect2i`
+
+Calculates the rectangular region containing non-transparent pixels within a `Texture2D object`. It returns a `Rect2i` representing the rectangle's position and size.
+
+### Screenshot
+
+`func screenshot(viewport: Viewport = get_viewport()) -> Image`
+
+`func screenshot_to_texture_rect(texture_rect: TextureRect = TextureRect.new(), viewport: Viewport = get_viewport()) -> TextureRect`
+
+Captures a screenshot of the current scene and assigns it as a texture to the provided TextureRect returning it.
+
+### Compare colors
+
+`func colors_are_similar(color_a: Color, color_b: Color, tolerance := 100.0) -> bool`
+
+Consider exploring alternative color difference metrics like Delta-E or CIELAB if precise color matching is crucial.
+
+### Delay function
+
+`func delay_func(callable: Callable, time: float, deferred: bool = true)`
+
+```swift
+// Example with lambda
+Utilities.delay_func(func(): print("test"), 1.5)
+
+// Example with arguments
+Utilities.delay_func(print_text.bind("test", 2.5)
+```
+
+Delay the function call the time in seconds given as parameter without interrupting the main thread.
+
+# Wizards
+
+## ArrayWizard 🔲
 
 Contains helper functions to deal with arrays and common operations that will appear naturally in the game development workflow.
 
 **_All `ArrayWizard` functions operate on a copy of the provided array. This ensures that the original array remains unchanged, preventing unintended modifications._**
 
-## Flatten
+### Flatten
 
 `static func flatten(array: Array, result = [])`
 
@@ -160,7 +392,7 @@ var flattened := ArrayWizard.flatten(multidimensional_array)
 [1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
 
-## Pick random values
+### Pick random values
 
 `static func pick_random_values(array: Array, items_to_pick: int = 1, duplicates: bool = true) -> Array`
 
@@ -174,7 +406,7 @@ If the requested number of items exceeds the available elements in the flattened
 ArrayWizard.pick_random_values(["maria", "bruno", "jimmy", "socrates"], 2) // Example output ["socrates", "maria"]
 ```
 
-## Remove duplicates
+### Remove duplicates
 
 `static func remove_duplicates(array: Array) -> Array`
 
@@ -186,7 +418,7 @@ ArrayWizard.remove_duplicates(duplicated_elements)
 // Output [1, 3, 6, 7, 8, 9]
 ```
 
-## Remove falsy values
+### Remove falsy values
 
 `static func remove_falsy_values(array: Array) -> Array:`
 
@@ -198,7 +430,7 @@ var dirty_array := [1, false, 3, null, null, 9]
 [1, 3, 9]
 ```
 
-## Middle element
+### Middle element
 
 `static func middle_element(array: Array):`
 
@@ -210,11 +442,11 @@ ArrayWizard.middle_element([1, 2, 3, 4, 5]) // 3
 ArrayWizard.middle_element([1, 2, 3, 4]) // 2
 ```
 
-# DictWizard 📗
+## DictWizard 📗
 
 Helps to manipulate complex dictionaries
 
-## Reverse key-value
+### Reverse key-value
 
 `static func reverse_key_value(source_dict: Dictionary) -> Dictionary:`
 
@@ -228,7 +460,7 @@ var reversed = DictWizard.reverse_key_value_in_dictionary(data)
 
 ```
 
-## Merge recursive
+### Merge recursive
 
 `static func merge_recursive(dest: Dictionary, source: Dictionary) -> void:`
 
@@ -266,7 +498,7 @@ print(dest)
 }
 ```
 
-# BBcodeWizard
+## BBcodeWizard
 
 Add bbcode tags via GdScript just calling functions, forgot about to remember the bbcode syntax.
 
@@ -302,9 +534,9 @@ func _ready():
     append_text(text_to_display)
 ```
 
-# CameraWizard 📹
+## CameraWizard 📹
 
-## Center origin
+### Center origin
 
 `center_by_ray_origin(camera: Camera3D) -> Vector3`
 
@@ -314,7 +546,7 @@ Returns the origin point of the camera's view as a Vector3 using a raycast proje
 
 Simpler version of `center_by_ray_origin`. It retrieves the camera's origin directly, without using rays.
 
-## Forward direction
+### Forward direction
 
 `forward_direction(camera: Camera3D) -> Vector3`
 
@@ -328,7 +560,7 @@ func throw_body(body: RigidBody3D, throw_power: float):
 	//...
 ```
 
-## Get Camera2D Frame
+### Get Camera2D Frame
 
 `static func get_camera2d_frame(node: Node2D) -> Rect2`
 
@@ -336,23 +568,23 @@ This function calculates and returns the rectangular frame of the 2D camera asso
 
 Useful for determining object visibility: You can check if an object falls within the camera frame to determine if it's currently visible to the player.
 
-# FileWizard 🗃
+## FileWizard 🗃
 
 The FileWizard class provides static methods to work with file extensions mainly parsing or retrieving metadata.
 
-## File path is valid
+### File path is valid
 
 `static func filepath_is_valid(path: String)`
 
 Validate a file path to know if the file is in good condition and is accessible to operate with it.
 
-## Directory path is valid
+### Directory path is valid
 
 `static func dirpath_is_valid(path: String)`
 
 Validate a dir path to know if the directory is in good condition and is accessible to operate with it.
 
-## Directory exist on executable path
+### Directory exist on executable path
 
 `static func _directory_exist_on_executable_path(directory_path: String) -> Error:`
 
@@ -366,7 +598,7 @@ This function can be useful for checking the presence of specific directories on
 - Implementing features that interact with files located near the executable, ensuring they are accessible.
 - Performing tasks based on the presence of specific directories within the executable's path
 
-## Get files recursive
+### Get files recursive
 
 `static get_files_recursive(path: String, regex: RegEx = null) -> Array:`
 
@@ -381,7 +613,7 @@ It supports regex expressions to find specific files
 	var pck_file_paths := FileWizard.get_files_recursive(path, regex)
 ```
 
-## Remove files recursive
+### Remove files recursive
 
 `static func remove_files_recursive(path: String, regex: RegEx = null) -> void:`
 
@@ -391,11 +623,11 @@ Similar to get files but this time removes all the files found in the path direc
 FileWizard.remove_files_recursive("res://assets/prototype")
 ```
 
-## Get .pck files
+### Get .pck files
 
 `static func get_pck_files(path: String) -> Array`
 
-## Load CSV/TSV
+### Load CSV/TSV
 
 `static load_csv(path: String, as_dictionary := true): Variant`
 
@@ -411,7 +643,7 @@ This function loads a CSV/TSV file from the specified path and returns the parse
 
 `ERR_PARSE_ERROR (int)`: This error code is returned if there are issues opening the file, parsing the CSV data, or encountering data inconsistencies.
 
-### How to use
+#### How to use
 
 For this example was used the `currency.csv` that you can find in [this website](https://wsform.com/knowledgebase/sample-csv-files/)
 
@@ -457,11 +689,11 @@ DICT LINE { "Code": "BAM", "Symbol": "KM", "Name": "Bosnia and Herzegovina " }
 ]
 ```
 
-# InputWizard 🎮
+## InputWizard 🎮
 
 This section introduces the `InputWizard`, a collection of helpful functions for handling common input-related tasks in your game. It acts as a shortcut to avoid repetitive code for frequently used input checks.
 
-## Mouse
+### Mouse
 
 `static func is_mouse_button(event: InputEvent) -> bool:`
 
@@ -485,7 +717,7 @@ This section introduces the `InputWizard`, a collection of helpful functions for
 
 `static func is_mouse_visible() -> bool`
 
-## Keyboard
+### Keyboard
 
 `static func numeric_key_pressed(event: InputEvent) -> bool`
 
@@ -509,7 +741,7 @@ func _input(event: InputEvent):
 
 `static func get_keyboard_input_for_action(action: String) -> InputEvent`
 
-## Gamepad
+### Gamepad
 
 `static func is_controller_button(event: InputEvent) -> bool`
 
@@ -521,7 +753,7 @@ func _input(event: InputEvent):
 
 `static func get_joypad_input_for_action(action: String) -> InputEvent`
 
-## Actions
+### Actions
 
 `static func action_just_pressed_and_exists(action: String) -> bool`
 
@@ -547,14 +779,14 @@ Releases held input actions. This is useful for situations where you want to int
 
 `static func get_all_inputs_for_action(action: String) -> Array[InputEvent]`
 
-# MathWizard 🧮
+## MathWizard 🧮
 
-## Access to universal constants
+### Access to universal constants
 
 This class has available most of the mathematical constants except for the ones that the engine already have like `TAU` and `PI`:
 
 ```swift
-const COMMON_EPSILON = 0.000001 ## 1.0e-6
+const COMMON_EPSILON = 0.000001 # 1.0e-6
 const PRECISE_EPSILON = 0.00000001 ## 1.0e-8
 
 const E = 2.71828182845904523536028747135266249775724709369995
@@ -593,9 +825,9 @@ const FRANSEN_ROBINSON_CONSTANT = 2.807770 # represents the area between the gra
 const HEX_CHARACTERS = "0123456789ABCDEF"
 ```
 
-## Probability
+### Probability
 
-### Spread
+#### Spread
 
 `static func spread(scale: float = 1.0) -> float`
 
@@ -611,7 +843,7 @@ random_value = spread()
 random_value = spread(2.0)
 ```
 
-### Chance
+#### Chance
 
 `static func chance(probability_chance: float = 0.5) -> bool`
 
@@ -625,11 +857,11 @@ heads = chance(0.5)
 rolled_a_six = chance(1.0 / 6)
 ```
 
-### Random byte
+#### Random byte
 
 `static func random_byte() -> int`
 
-### Bias
+#### Bias
 
 `static func bias(x : float, _bias : float) -> float`
 
@@ -643,7 +875,7 @@ It could represent a probability, a random number between 0 and 1, or any other 
 By adjusting the bias value, you can control how much the dice is skewed towards higher numbers.
 A bias of 0.5 would result in a fair die roll. A bias closer to 1 would make it more likely to roll higher numbers.
 
-### Sigmoid
+#### Sigmoid
 
 `static func sigmoid(x: float, scaling_factor: float = 0.0) -> float`
 
@@ -655,7 +887,7 @@ The `scaling factor` allows you to adjust the steepness of the sigmoid curve, co
 
 **Probabilistic Events:** If you're implementing a system with a chance of something happening _(e.g., a random critical hit in combat)_, you could use the sigmoid function to translate a random value _(between 0 and 1)_ into a more "squashed" probability distribution. This can be useful for creating events that are more likely to occur near the average value and less likely at the extremes _(very low or very high chance)_.
 
-## Factorials
+### Factorials
 
 `static func factorial(number) -> float`
 
@@ -683,7 +915,7 @@ MathWizard.factorials_from(5) // [1, 1, 2, 6, 24, 120]
 MathWizard.factorials_from(7) // [1, 1, 2, 6, 24, 120, 720, 5040]
 ```
 
-## Quartenion to axis angle
+### Quartenion to axis angle
 
 `static func quaternion_to_axis_angle(quaternion : Quaternion) -> Quaternion`
 
@@ -693,7 +925,7 @@ MathWizard.factorials_from(7) // [1, 1, 2, 6, 24, 120, 720, 5040]
 
 Useful for Animation or Inverse Kinematics, Gimbal lock _(when rotations get stuck or limited)_, Data storage or Transmission
 
-## Roman numbers
+### Roman numbers
 
 `static func integer_to_roman_number(number: int) -> String`
 
@@ -718,7 +950,7 @@ MathWizard.roman_number_to_integer("MMXXIV") // 2024
 
 Transform from integer to roman or from roman to integer easily with this functions.
 
-## Hexadecimal
+### Hexadecimal
 
 `static func hexadecimal_to_decimal(hex: String) -> int`
 
@@ -740,7 +972,7 @@ MathWizard.decimal_to_hexadecimal(1024)  // 400
 MathWizard.decimal_to_hexadecimal(-1)  // ""
 ```
 
-## Value between
+### Value between
 
 `static func value_is_between(number: int, min_value: int, max_value: int, inclusive: = true) -> bool`
 
@@ -756,7 +988,7 @@ MathWizard.value_is_between(15, 5, 15, false):  //False, not Inclusive range
 
 ```
 
-## Thousands separator
+### Thousands separator
 
 `static func add_thousand_separator(number) -> String`
 
@@ -764,13 +996,13 @@ Formats a number _(integer or float)_ with comma separators for thousands. This 
 If the absolute value of the number is less than 1000, it is simply converted to a string and returned without any modification
 
 ```swift
-MathWizard.add_thousand_separator(1000) ## 1,000
-MathWizard.add_thousand_separator(1000000) ## 1,000,000
-MathWizard.add_thousand_separator(9999448828) ## 1,289,128,918,921
-MathWizard.add_thousand_separator(1289128918921) ## 9,999,448,828
+MathWizard.add_thousand_separator(1000) // 1,000
+MathWizard.add_thousand_separator(1000000) // 1,000,000
+MathWizard.add_thousand_separator(9999448828) // 1,289,128,918,921
+MathWizard.add_thousand_separator(1289128918921) // 9,999,448,828
 ```
 
-## Big round
+### Big round
 
 `static func big_round(num: int) -> int`
 
@@ -793,7 +1025,7 @@ MathWizard.big_round(12345)  // Output: 12340
 MathWizard.big_round(5678)  // Output: 5678
 ```
 
-## Average
+### Average
 
 `static func average(numbers: Array = []) -> float`
 
@@ -805,7 +1037,7 @@ For example, the mean average of the numbers 2, 3, 4, 7, and 9 _(summing to 25)_
 MathWizard.average([2, 3, 4, 7, 9]) // 5
 ```
 
-## Areas & Volumes
+### Areas & Volumes
 
 `static func volume_of_sphere(radius: float) -> float`
 
@@ -815,7 +1047,7 @@ MathWizard.average([2, 3, 4, 7, 9]) // 5
 
 `static func area_of_triangle(base: float, perpendicular_height: float) -> float`
 
-## Angles
+### Angles
 
 `static func angle_from_cardinal_direction(cardinal_direction: float) -> float`
 
@@ -859,7 +1091,7 @@ var limited_direction = MathWizard.limit_horizontal_angle(aiming_direction, max_
 print("Limited aiming direction:", limited_direction)  // Output: (0.5, -0.866)
 ```
 
-## Segment circle intersects
+### Segment circle intersects
 
 `static func segment_circle_intersects(start, end, center, radius)`
 
@@ -869,7 +1101,7 @@ This function checks for intersections between a line segment and a circle in 2D
 
 Returns an array containing the `Vector2` coordinates of all valid intersection points between the line segment and the circle. If there are no intersections, an empty array is returned.
 
-## Segment Rect intersects
+### Segment Rect intersects
 
 `static func segment_rect_intersects(a, b, rect) -> Array`
 
@@ -877,7 +1109,7 @@ This function determines the intersection point(s) between a line segment and a 
 
 Returns the points array containing the intersection point(s) in order of increasing distance from the starting point `a` of the line segment. If no intersections are found, the returned array will be empty
 
-## Rect difference
+### Rect difference
 
 `static func rect_difference(r1: Rect2, r2: Rect2)`
 
@@ -887,11 +1119,11 @@ This function calculates the difference between two rectangles in 2D space, retu
 
 Returns the result array containing `Rect2` objects representing the remaining rectangular areas after removing the overlapping region between `r1` and `r2`. If there's no overlap, **the array will be empty.**
 
-# StringWizard 🔤
+## StringWizard 🔤
 
 This wizard provides helpful functions for manipulate or generate strings.
 
-## Access to common constants
+### Access to common constants
 
 There is some common constants that can be accessed from this class and are useful to work with strings
 
@@ -905,7 +1137,7 @@ const ASCII_HEXDIGITS = "0123456789ABCDEF"
 const ASCII_PUNCTUATION =  "!\"#$%&'()*+, -./:;<=>?@[\\]^_`{|}~"
 ```
 
-## Format time
+### Format time
 
 `static func format_seconds(time: float, use_milliseconds: bool = false) -> String`
 
@@ -928,11 +1160,11 @@ var formatted_time_with_ms =  StringWizard.format_seconds(123.456, true)
 // Result: "02:03:45"
 ```
 
-## URL is valid
+### URL is valid
 
 `static func is_valid_url(url: String) -> bool`
 
-## Generate random string
+### Generate random string
 
 `static func generate_random_string(length: int = 25, characters: String = ASCII_ALPHANUMERIC) -> String`
 
@@ -940,31 +1172,31 @@ Generates a random string of a specified length using the provided character set
 
 To ensure a valid string, **it requires a length greater than 1 and at least one valid character**. Otherwise, it returns `null`.
 
-## Snake to camel case
+### Snake to camel case
 
 `static func snake_to_camel_case(screaming_snake_case: String) -> String`
 
 Converts snake_case_string or SCREAMING_SNAKE_CASE into PascalCaseString
 
-## Camel to snake case
+### Camel to snake case
 
 `static func camel_to_snake(camel_string: String) -> String`
 
 Converts PascalCaseString into snake_case_string
 
-## Clean
+### Clean
 
 `static func clean(string: String) -> String`
 
 Clean a string by removing characters that are not letters _(uppercase or lowercase)_ or spaces, tabs or newlines. This returns a new string and does not modify the original.
 
-## Wrap text
+### Wrap text
 
 `static func wrap_text(text: String = "", max_line_length: int = 120)`
 
 Wraps the provided text into multiple lines if it exceeds the specified `max_line_length`
 
-## Integer to ordinal
+### Integer to ordinal
 
 `static func integer_to_ordinal(number: int) -> String`
 
@@ -1010,7 +1242,7 @@ ordinal_representation = StringWizard.integer_to_ordinal(212)
 
 ```
 
-## Pretty number
+### Pretty number
 
 For more complex cases take a look at this addon [GodotBigNumberClass](https://github.com/ChronoDK/GodotBigNumberClass)
 
@@ -1026,7 +1258,7 @@ StringWizard.pretty_number(1234567.89) // 1.2M
 StringWizard.pretty_number(1234567890.123) // 1.2B
 ```
 
-## Number to Binary
+### Number to Binary
 
 `static func to_binary_string(num: int) -> String`
 
@@ -1036,19 +1268,19 @@ StringWizard.to_binary_string(13) // 1101
 StringWizard.to_binary_string(255) // 11111111
 ```
 
-## Strip bbcode
+### Strip bbcode
 
 `static func strip_bbcode(source:String) -> String`
 
 Removes the bbcode tags for the given text.
 
-## Strip file paths
+### Strip file paths
 
 `static func strip_filepaths(source: String) -> String`
 
 Removes any text starting with `"res://"` followed by one or more non-space characters.
 
-# TranslationWizard 🗺️
+## TranslationWizard 🗺️
 
 This wizard acts as a container for accessing language information that you can implement in your game.
 
@@ -1110,7 +1342,7 @@ const AVAILABLE_LANGUAGES = {
 }
 ```
 
-## Shortcut functions
+### Shortcut functions
 
 Each language data can be accesed by the corresponding function so for example If you want to access english or french:
 
@@ -1119,11 +1351,11 @@ TranslationWizard.english() // ["en", "en_US", "English", "English"]
 TranslationWizard.french() // ["fr", "fr_FR", "Français", "French"]
 ```
 
-# VectorWizard ➖
+## VectorWizard ➖
 
 The `VectorWizard` static class provides a collection of commonly used vector methods that can simplify your everyday game development tasks. While it offers a wide range of functions, in-depth documentation might not be available for every method. However, the method names themselves are designed to be clear and descriptive.
 
-## Up direction opposite
+### Up direction opposite
 
 `static func up_direction_opposite_vector2(up_direction: Vector2) -> Vector2`
 
@@ -1145,7 +1377,7 @@ func apply_gravity() -> void:
   // Do your gravity stuff...
 ```
 
-## Generate random directions
+### Generate random directions
 
 Generate a number of random directions defining the min and max angle ranges in degrees / radians from an origin Vector
 
@@ -1177,7 +1409,7 @@ This function is useful for creating random 3D movement directions or raycasts.
 Generates a random 3D direction vector with integer values representing axes or other fixed directional combinations in 3D space _(e.g., Vector3(1, 0, 0), Vector3(0, 1, -1))_.
 This function can be used for checks or movement along specific axes or predefined directions.
 
-## Generate random angles
+### Generate random angles
 
 Generates a random angle in radians within the specified range _(defaults to 0 to 2π)_ or _(defaults to 0 to 360 degrees)_
 
@@ -1185,13 +1417,13 @@ Generates a random angle in radians within the specified range _(defaults to 0 t
 
 `static func generate_random_angle_in_degrees(min_angle: float = 0.0, max_angle: float = 360.0) -> float`
 
-## Generate random mesh surface position
+### Generate random mesh surface position
 
 `static func generate_random_mesh_surface_position(target: MeshInstance3D) -> Vector3`
 
 Generate a random point in the mesh surface passed as parameter. If the MeshInstance3D does not have a MeshShape set, it returns `Vector3.ZERO`
 
-## Random position on circle
+### Random position on circle
 
 `static func random_inside_unit_circle(position: Vector2, radius: float = 1.0)`
 
@@ -1209,13 +1441,13 @@ This function generates a random position vector on the edge _(or slightly insid
 
 Two concentric circles _(donut basically)_
 
-## Random point in Rect
+### Random point in Rect
 
 `static func random_point_in_rect(rect: Rect2) -> Vector2`
 
 Retrieves a random point inside a given Rect2
 
-## Translate axis to vector
+### Translate axis to vector
 
 `static func translate_x_axis_to_vector(axis: float) -> Vector2`
 
@@ -1225,9 +1457,9 @@ Converts a value from the horizontal axis of user input _(typically obtained usi
 
 Converts a value from the vertical axis of user input _(typically obtained using Input.get_axis("move_up", "move_down"))_ to a corresponding 2D direction vector. This function simplifies translating user input for horizontal movement into a usable direction vector.
 
-## Normalization
+### Normalization
 
-### Directions
+#### Directions
 
 `static func normalize_vector2(value: Vector2) -> Vector2`
 
@@ -1247,7 +1479,7 @@ The standard `.normalized()` function in Godot scales the vector to a magnitude 
 
 **_Only uses this if you need to take into account diagonal directions_**
 
-### Angles
+#### Angles
 
 `static func normalize_degrees_angle(degrees_angle: float) -> float`
 
@@ -1265,7 +1497,7 @@ normalized_angle_radians = VectorWizard.normalize_radian_angle(5 * PI) // 3.1415
 normalized_angle_radians = VectorWizard.normalize_radian_angle(-2 * PI) // 6.28318 (TAU)
 ```
 
-## Manhattan
+### Manhattan
 
 `static func distance_manhattan_v2(a: Vector2, b: Vector2) -> float`
 
@@ -1281,7 +1513,7 @@ Also known as the "city distance" or "L1 distance". It measures the distance bet
 
 **Use Case:** Imagine a pathfinding algorithm on a grid-based map. Manhattan distance can be used to estimate the distance between two points on the grid, as movement is restricted to horizontal and vertical steps.
 
-## Chebysev
+### Chebysev
 
 `static func distance_chebyshev_v2(a: Vector2, b: Vector2) -> float`
 
@@ -1297,7 +1529,7 @@ Also known as the "chess distance" or "L∞ distance". It measures the distance 
 
 **Use Case:** Imagine a tower defense game where enemies can only move horizontally or vertically along pre-defined paths. Chebyshev distance can be used to determine the enemy's "attack range" based on the maximum distance they can travel in a single move.
 
-## Closest point on line
+### Closest point on line
 
 `static func closest_point_on_line_clamped_v2(a: Vector2, b: Vector2, c: Vector2) -> Vector2`
 
@@ -1325,7 +1557,7 @@ This function is similar to the previous one but does not clamp the result. It c
 
 ---
 
-## Rotate randomly
+### Rotate randomly
 
 `static func rotate_horizontal_random(origin: Vector3 = Vector3.ONE) -> Vector3`
 
@@ -1339,7 +1571,7 @@ The origin parameter allows you to specify the center of rotation _(defaults to 
 
 **Use Case:** Imagine creating a dynamic light source that simulates a flickering torch or a spotlight with a slight wobble. You can leverage the `rotate_horizontal_random` and `rotate_vertical_random` functions to achieve this effect.
 
-## Is Withing distance squared
+### Is Withing distance squared
 
 `static func is_withing_distance_squared_v2(vector: Vector2, second_vector: Vector2, distance: float) -> bool`
 
@@ -1355,7 +1587,7 @@ The origin parameter allows you to specify the center of rotation _(defaults to 
 
 While using squared distances offers a performance benefit, keep in mind that it doesn't give you the actual distance between the points. If you need the actual distance for calculations or other purposes, you'll need to perform a square root operation on the result of `is_withing_distance_squared`
 
-## Direction from rotation
+### Direction from rotation
 
 `static func direction_from_rotation_v2(rotation: float) -> Vector2`
 
@@ -1369,7 +1601,7 @@ While using squared distances offers a performance benefit, keep in mind that it
 
 **Use Case:** Imagine having a spaceship that can rotate freely. These functions can be used to convert the spaceship's current rotation angle _(obtained from its transform)_ into a direction vector representing the orientation it's facing. This direction vector can then be used for various purposes, such as applying thrust in the forward direction or firing projectiles in the direction the spaceship is facing.
 
-## Scale vector
+### Scale vector
 
 `static func scale_vector2(vector: Vector2, length: float) -> Vector2`
 
@@ -1382,7 +1614,7 @@ These functions **normalizes** and **scale** a given vector to a new specified l
 velocity = VectorWizard.scale_vector2(direction, speed)
 ```
 
-## Clamp vector
+### Clamp vector
 
 `static func clamp_vector2(vector: Vector2, min_length: float, max_length: float)-> Vector2`
 
@@ -1390,7 +1622,7 @@ velocity = VectorWizard.scale_vector2(direction, speed)
 
 These functions clamp the magnitude _(length)_ of a vector within a specified minimum and maximum range. Imagine having a force applied to an object, represented by a vector. You can use `clamp_vector` to restrict the force's magnitude to a specific range, preventing the object from accelerating too quickly.
 
-## Flip & Reverse
+### Flip & Reverse
 
 This functions does not modify the original Vector.
 
@@ -1416,7 +1648,7 @@ VectorWizard.reverse_v2(Vector2(3, 5)) // Vector2(5, 3)
 VectorWizard.reverse_v3(Vector3(3, 5, 7)) // Vector2(7, 5, 3)
 ```
 
-## Topdown vector
+### Topdown vector
 
 Removes the y component from a Vector3 and return a new Vector2
 
@@ -1434,7 +1666,7 @@ By ignoring the y-component _(height)_ of the `Vector3`, the function effectivel
 
 Overall, this function provides a convenient way to extract relevant 2D information from 3D data, making it a valuable tool for various game development tasks involving top-down perspectives, 2D physics, UI positioning, and pathfinding.
 
-## Side angles
+### Side angles
 
 `static func side_angle_by_angles(start_rad_angle: float, end_rad_angle: float)`
 
@@ -1453,7 +1685,7 @@ This functionality is highly useful in various game development scenarios:
 - **Field of View Calculations:**
   Determining the angle between the edges of a character's field of view can be used for visibility checks and awareness mechanics
 
-## Position by polar coordinates
+### Position by polar coordinates
 
 `static func get_position_by_polar_coordinates_v2(center_position: Vector2, angle_radians: float, radius: float) -> Vector2`
 
@@ -1465,7 +1697,7 @@ Both functions take three arguments:
 - `angle_radians`: The angle in radians specifying the direction from the center point.
 - `radius`: The distance from the center point along the specified angle.
 
-### Examples
+#### Examples
 
 **Projectile Trajectory**
 
@@ -1497,7 +1729,7 @@ var camera_position = get_position_by_polar_coordinates_v3(target_position, angl
 print("Camera position: ", camera_position)
 ```
 
-## Colors
+### Colors
 
 `static func color_from_vector(vec) -> Color`
 
@@ -1511,13 +1743,13 @@ Return a Vector3 from a Color value in both RGB and HSV
 
 A common use case it's convert color data from textures or materials into vector representations for calculations or manipulation.
 
-## Polygon bounding box
+### Polygon bounding box
 
 `static func polygon_bounding_box(polygon: PackedVector2Array) -> Rect2`
 
 Takes a `PackedVector2Array` as input, which represents a polygon defined by an array of 2D vectors _(points)_. The function's purpose is to calculate the bounding box rectangle that encloses the entire polygon.
 
-# NodeWizard ⭕
+## NodeWizard ⭕
 
 NodeWizard is a static class in Godot that acts as your toolbox for simplifying common node operations. It provides convenient methods to handle tasks you'd typically perform using native methods like `direction_to` and `distance_to`.
 
@@ -1533,7 +1765,7 @@ Here's a breakdown of the benefits:
 
 - **Reduced Error Potential:** Working directly with nodes can minimize errors that might arise from manual vector calculations
 
-## Direction to
+### Direction to
 
 `static func local_direction_to_v2(a: Node2D, b: Node2D) -> Vector2`
 
@@ -1556,7 +1788,7 @@ a.global_position.direction_to(b.global_position)
 NodeWizard.global_direction_to_v2(a, b)
 ```
 
-## Distance to
+### Distance to
 
 `static func local_distance_to_v2(a: Node2D, b: Node2D) -> float`
 
@@ -1579,13 +1811,13 @@ a.global_position.distance_to(b.global_position)
 NodeWizard.global_distance_to_v2(a, b)
 ```
 
-## Facing
+### Facing
 
 `static func a_is_facing_b(a: Node3D, b: Node3D) -> bool`
 
 Detects if the **node A** is facing the **node B** in a 3D space.
 
-## Search
+### Search
 
 Functions related to search nodes by type or custom class. When node/s are not found, an empty array or null depending on the function is returned.
 
@@ -1609,45 +1841,45 @@ NodeWizard.find_nodes_of_custom_class(self, MachineState)
 NodeWizard.first_node_of_custom_class(self, MachineState)
 ```
 
-## Childrens
+### Childrens
 
-### Get all childrens
+#### Get all childrens
 
 `static func get_all_children(from_node: Node) -> Array`
 
 Get all the childrens from this node recursively
 
-### Get last child
+#### Get last child
 
 `static func get_last_child(node: Node)`
 
 Get the latest child in the scene tree from this node
 
-### First child node in group
+#### First child node in group
 
 `static func first_child_node_in_group(node: Node, group: String)`
 
 Find the first child node found with the provided group passed as parameter.
 
-### Group
+#### Group
 
 `static func add_all_childrens_to_group(node: Node, group: String, filter: Array[Node] = []) -> void`
 
-### Meta
+#### Meta
 
 `static func add_meta_to_all_children(node: Node, meta: String, value: Variant, filter: Array[Node] = []) -> void`
 
 `static func remove_meta_from_all_children(node: Node, meta: String) -> void`
 
-## Ancestors
+### Ancestors
 
-### Get all ancestors
+#### Get all ancestors
 
 `static func get_all_ancestors(from_node: Node) -> Array`
 
 Get all the ancestors from this node recursively
 
-## Visibility
+### Visibility
 
 `static func hide_nodes(nodes: Array[Node] = []) -> void`
 
@@ -1655,33 +1887,33 @@ Get all the ancestors from this node recursively
 
 Hide or show all the nodes passed as parameter. If the node does not have the `show()` `hide()` method nothings happens and no error is returned.
 
-## Removal
+### Removal
 
-### Remove
+#### Remove
 
 `static func remove(node: Node) -> void`
 
 Remove safely the node doing a few checks before doing the action.
 
-### Remove and queue free childrens
+#### Remove and queue free childrens
 
 `static func remove_and_queue_free_children(node: Node, except: Array = []) -> void`
 
 `static func queue_free_children(node: Node, except: Array = []) -> void`
 
-## Editor
+### Editor
 
 `static func set_owner_to_edited_scene_root(node: Node) -> void`
 
 Set the owner of this node to scene root only if it's running on the editor. If not, nothing happens.
 
-## Get tree depth
+### Get tree depth
 
 `static func get_tree_depth(node: Node) -> int`
 
 Calculate how depth is the given node on the current scene tree
 
-## Get absolute Z index
+### Get absolute Z index
 
 `static func get_absolute_z_index(node: Node2D) -> int`
 
@@ -1702,13 +1934,13 @@ Godot offers two types of z-index behavior:
 
 ---
 
-## Node validation
+### Node validation
 
 `static func is_node_valid(node: Node) -> bool`
 
 A more concise validation to know if a node is valid to be manipulated.
 
-## Nearest & Farthest
+### Nearest & Farthest
 
 `static func get_nearest_node_by_distance(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary`
 
@@ -1736,7 +1968,7 @@ Both functions return a dictionary with two keys:
 
 - `distance`: The distance between the from point and the found node _(or null if none is found)._
 
-## Screen
+### Screen
 
 `static func on_screen(node: Node, margin : float = 16.0 ) -> bool`
 
@@ -1746,7 +1978,7 @@ This function is useful to know if the node it's on the current viewport.
 
 Return the current screen position for the given node.
 
-## UI node is hovered
+### UI node is hovered
 
 `static func ui_node_is_hovered(control: Control) -> bool`
 
