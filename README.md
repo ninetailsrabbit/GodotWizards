@@ -49,6 +49,16 @@ Think of them as magic tools in your coding toolbox!
   - [Keyboard](#keyboard)
   - [Gamepad](#gamepad)
   - [Actions](#actions)
+- [MathWizard](#mathwizard)
+  - [Access to universal constants](#access-to-universal-constants)
+  - [Bias](#bias)
+  - [Sigmoid](#sigmoid)
+  - [Factorials](#factorials)
+  - [Quartenion to axis angle](#quartenion-to-axis-angle)
+  - [Roman numbers](#roman-numbers)
+  - [Hexadecimal](#hexadecimal)
+  - [Value between](#value-between)
+  - [Thousands separator](#thousands-separator)
 - [StringWizard 🔤](#stringwizard-)
 - [VectorWizard ➖](#vectorwizard-)
 - [NodeWizard ⭕](#nodewizard-)
@@ -458,6 +468,194 @@ This function checks if any of the actions in the actions array were just releas
 Releases held input actions. This is useful for situations where you want to interrupt a continuously held input, such as canceling a cinematic trigger, ending a time stop effect, or breaking a player stun
 
 `static func get_all_inputs_for_action(action: String) -> Array[InputEvent]`
+
+# MathWizard
+
+## Access to universal constants
+
+This class has available most of the mathematical constants except for the ones that the engine already have like `TAU` and `PI`:
+
+```swift
+const COMMON_EPSILON = 0.000001 ## 1.0e-6
+const PRECISE_EPSILON = 0.00000001 ## 1.0e-8
+
+const E = 2.71828182845904523536028747135266249775724709369995
+const δ = 4.6692016091 # FEIGENBAUM CONSTANT, period-doubling bifurcation. This bifurcation describes the behavior of a system that exhibits a doubling of its periodic cycle when a certain parameter is gradually changed
+const FEIGENBAUM_ALPHA = 2.5029078750 # FEIGENBAUM ALPHA, another bifurcation constant
+const APERY_CONSTANT = 1.2020569031 # APERY'S CONSTANT, related to zeta function
+const GOLDEN_RATIO = 1.6180339887 # GOLDEN RATIO, (1 + sqrt(5)) / 2
+const EULER_MASCHERONI_CONSTANT = 0.5772156649 # EULER-MASCHERONI CONSTANT, gamma minus harmonic series
+const KHINCHINS_CONSTANT = 2.6854520010 # KHINCHIN'S CONSTANT, optimal embedding dimension
+const GAUSS_KUZMIN_WIRSING_CONSTANT = 0.3036630028 # GAUSS-KUZMIN-WIRSING CONSTANT, sphere packing
+const BERNSTEINS_CONSTANT = 0.2801694990 # BERNSTEIN'S CONSTANT, derivative of Dirichlet eta function
+const HAFNER_SARNAK_MCCURLEY_CONSTANT = 0.3532363718 # HAFNER-SARNAK-MCCURLEY CONSTANT, number theory
+const MEISSEL_MERTENS_CONSTANT = 0.2614972128 # MEISSEL-MERTENS CONSTANT, prime number distribution
+const GLAISHER_KINKELIN_CONSTANT = 1.2824271291 # GLAISHER-KINKELIN CONSTANT, zeta function
+const OMEGA = 0.5671432904 # OMEGA CONSTANT, alternating harmonic series
+const GOLOMB_DICKMAN_CONSTANT = 0.6243299885 # GOLOMB-DICKMAN CONSTANT, prime number distribution
+const CAHENS_CONSTANT = 0.6434105462 # CAHEN'S CONSTANT, Diophantine approximation
+const TWIN_PRIME = 0.6601618158 # TWIN PRIME CONSTANT, probability of twin prime
+const LAPLACE_LIMIT = 0.6627434193 # LAPLACE LIMIT, cosmic microwave background radiation
+const LANDAU_RAMANUJAN_CONSTANT = 0.7642236535 # LANDAU-RAMANUJAN CONSTANT, constant in quantum field theory
+const CATALANS_CONSTANT = 0.9159655941 # CATALAN'S CONSTANT, sum of reciprocals of squares
+const VISWANATHS_CONSTANT = 1.13198824 # VISWANATH'S CONSTANT, number theory
+const CONWAYS_CONSTANT = 1.3035772690 # CONWAY'S CONSTANT, sphere packing
+const MILLS_CONSTANT = 1.3063778838 # MILLS' CONSTANT, normal number
+const PLASTIC_CONSTANT = 1.3247179572 # PLASTIC CONSTANT, golden raio analogue
+const RAMANUJAN_SOLDNER_CONSTANT = 1.4513692348 # RAMANUJAN-SOLDNE CONSTANT, elliptic integrals
+const BACKHOUSE_CONSTANT = 1.4560749485 # BACKHOUSE'S CONSTANT, gamma function
+const PORTERS_CONSTANT = 1.4670780794 # PORTER'S CONSTANT, geometry
+const LIEBS_SQUARE_ICE_CONSTANT = 1.5396007178 # LIEB'S SQUARE ICE CONSTANT, statistical mechanics
+const ERDOS_BORWEIN_CONSTANT = 1.6066951524 # ERDOS-BORWEIN CONSTANT, normal number
+const NIVENS_CONSTANT = 1.7052111401 # NIVENS' CONSTANT, number theory
+const UNIVERSAL_PARABOLIC_CONSTANT = 2.2955871493 # UNIVERSAL PARABOLIC CONSTANT, reflection coefficient
+const SIERPINSKIS_CONSTANT = 2.5849817595 # SIERPINSKI'S CONSTANT, Sierpinski triangle fractal
+const FRANSEN_ROBINSON_CONSTANT = 2.807770 # represents the area between the graph of the reciprocal Gamma function and the positive x-axis
+
+const HEX_CHARACTERS = "0123456789ABCDEF"
+```
+
+## Bias
+
+`static func bias(x : float, _bias : float) -> float`
+
+`x`: This is the input value between 0 and 1 that you want to apply the bias to.
+It could represent a probability, a random number between 0 and 1, or any other value in that range.
+
+`bias`: This is the bias factor, also between 0 and 1. It controls how much the function pushes the x value away from 0.5 _(the center)_.
+
+**Example:**
+
+By adjusting the bias value, you can control how much the dice is skewed towards higher numbers.
+A bias of 0.5 would result in a fair die roll. A bias closer to 1 would make it more likely to roll higher numbers.
+
+## Sigmoid
+
+`static func sigmoid(x: float, scaling_factor: float = 0.0) -> float`
+
+The sigmoid function acts like a translator, taking any real number `(x)` as input and transforming it into a value between 0 and 1 _(but never exactly 0 or 1)_. Think of it as a dimmer switch for numbers.
+
+The `scaling factor` allows you to adjust the steepness of the sigmoid curve, controlling how quickly it transitions between its output values of 0 and 1. This can be helpful for fine-tuning the behavior of the sigmoid function in different applications
+
+**Use Case:** Imagine you're building an AI that recognizes handwritten digits. The sigmoid function can be used to convert the confidence level of the network's prediction (_e.g., how sure it is that a scribble is a "7")_ into a value between 0 _(not confident)_ and 1 _(highly confident)_.
+
+**Probabilistic Events:** If you're implementing a system with a chance of something happening _(e.g., a random critical hit in combat)_, you could use the sigmoid function to translate a random value _(between 0 and 1)_ into a more "squashed" probability distribution. This can be useful for creating events that are more likely to occur near the average value and less likely at the extremes _(very low or very high chance)_.
+
+## Factorials
+
+`static func factorial(number) -> float`
+
+This function calculates the factorial of a given non-negative integer number and it uses a recursive approach.
+
+If the number is 0 or 1, the function returns 1 _(base case)_.
+Otherwise, it multiplies the number by the factorial of the previous number _(number - 1)_ and returns the result
+
+`static func factorials_from(number) -> Array[float]`
+Calculate all the factorial numbers from the one passed as parameter returning the values inside an array.
+
+```swift
+MathWizard.factorial(5) // 120 --> 5! = 5 * 4 * 3 * 2 * 1
+
+MathWizard.factorials_from(5) // [1, 1, 2, 6, 24, 120]
+/*
+0! = 1 (by definition)
+1! = 1 (by definition)
+2! = 2 * 1 = 2
+3! = 3 * 2 * 1 = 6
+4! = 4 * 3 * 2 * 1 = 24
+5! = 5 * 4 * 3 * 2 * 1 = 120
+*/
+
+MathWizard.factorials_from(7) // [1, 1, 2, 6, 24, 120, 720, 5040]
+```
+
+## Quartenion to axis angle
+
+`static func quaternion_to_axis_angle(quaternion : Quaternion) -> Quaternion`
+
+`Quaternions` are a mathematical representation commonly used in 3D graphics to represent rotations.
+
+`Axis-angle` representation specifies a rotation by an axis vector and the angle of rotation around that axis.
+
+Useful for Animation or Inverse Kinematics, Gimbal lock _(when rotations get stuck or limited)_, Data storage or Transmission
+
+## Roman numbers
+
+`static func integer_to_roman_number(number: int) -> String`
+
+`static func roman_number_to_integer(roman_number: String) -> int`
+
+```swift
+
+// Integer to Roman Numeral Examples:
+MathWizard.integer_to_roman_number(3)  // III
+MathWizard.integer_to_roman_number(47)  // XLVII
+MathWizard.integer_to_roman_number(1999) // MCMXCIX
+MathWizard.integer_to_roman_number(3549) // MMMDXLIX
+MathWizard.integer_to_roman_number(2024) // MMXXIV
+
+// Roman Numeral to Integer Examples:
+MathWizard.roman_number_to_integer("III") // 3
+MathWizard.roman_number_to_integer("XLVII") // 47
+MathWizard.roman_number_to_integer("MCMXCIX") // 1999
+MathWizard.roman_number_to_integer("MMMDXLIX") // 3549
+MathWizard.roman_number_to_integer("MMXXIV") // 2024
+```
+
+Transform from integer to roman or from roman to integer easily with this functions.
+
+## Hexadecimal
+
+`static func hexadecimal_to_decimal(hex: String) -> int`
+
+`static func decimal_to_hexadecimal(decimal: int) -> String`
+
+```swift
+// Hexadecimal to Decimal Examples
+MathWizard.hexadecimal_to_decimal("FF")   // 255
+MathWizard.hexadecimal_to_decimal("1A")   // 26
+MathWizard.hexadecimal_to_decimal("C131") // 49457
+MathWizard.hexadecimal_to_decimal("E01D") // 57373
+MathWizard.hexadecimal_to_decimal("12345") // -1 (Invalid hex string)
+
+// Decimal to Hexadecimal Examples:
+MathWizard.decimal_to_hexadecimal(255)   // FF
+MathWizard.decimal_to_hexadecimal(49457) // C131
+MathWizard.decimal_to_hexadecimal(57373) // E01D
+MathWizard.decimal_to_hexadecimal(1024)  // 400
+MathWizard.decimal_to_hexadecimal(-1)  // ""
+```
+
+## Value between
+
+`static func value_is_between(number: int, min_value: int, max_value: int, inclusive: = true) -> bool`
+
+`static func decimal_value_is_between(number: float, min_value: float, max_value: float, inclusive: = true, precision: float = 0.00001) -> bool`
+
+This functions checks if a given number _(integer or float)_ falls within a specified range defined by min*value and max_value.The function returns true if the number is within the specified range *(based on the inclusive flag)\_, and false otherwise.
+
+```swift
+if MathWizard.value_is_between(10, 5, 15):  //True, Inclusive range (default)
+ // do stuff..
+
+MathWizard.value_is_between(15, 5, 15, false):  //False, not Inclusive range
+
+```
+
+## Thousands separator
+
+`static func add_thousand_separator(number) -> String`
+
+Formats a number _(integer or float)_ with comma separators for thousands. This improves readability for large numbers.
+If the absolute value of the number is less than 1000, it is simply converted to a string and returned without any modification
+
+```swift
+MathWizard.add_thousand_separator(1000) ## 1,000
+MathWizard.add_thousand_separator(1000000) ## 1,000,000
+MathWizard.add_thousand_separator(9999448828) ## 1,289,128,918,921
+MathWizard.add_thousand_separator(1289128918921) ## 9,999,448,828
+
+```
 
 # StringWizard 🔤
 
