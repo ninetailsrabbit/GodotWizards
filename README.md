@@ -7,9 +7,9 @@
     Collection of static utility classes
     <br />
     ·
-    <a href="https://github.com/ninetailsrabbit/GodotWizard/issues/new?labels=bug&template=bug-report.md">Report Bug</a>
+    <a href="https://github.com/ninetailsrabbit/GodotWizards/issues/new?assignees=ninetailsrabbit&labels=%F0%9F%90%9B+bug&projects=&template=bug_report.md&title=">Report Bug</a>
     ·
-    <a href="https://github.com/ninetailsrabbit/GodotWizard/issues/new?labels=enhancement&template=feature-request.md">Request Features</a>
+    <a href="https://github.com/ninetailsrabbit/GodotWizards/issues/new?assignees=ninetailsrabbit&labels=%E2%AD%90+feature&projects=&template=feature_request.md&title=">Request Features</a>
   </p>
 </div>
 
