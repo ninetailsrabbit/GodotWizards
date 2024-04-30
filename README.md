@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="icon.svg" alt="Logo" width="160" height="160">
+    <img src="icon.png" alt="Logo" width="160" height="160">
 
 <h3 align="center">GodotWizards</h3>
 
@@ -7,12 +7,10 @@
     Collection of static utility classes
     <br />
     ·
-    <a href="https://github.com/ZeeWeasel/LogDuck/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/ninetailsrabbit/GodotWizard/issues/new?labels=bug&template=bug-report.md">Report Bug</a>
     ·
-    <a href="https://github.com/ZeeWeasel/LogDuck/issues/new?labels=enhancement&template=feature-request---.md">Request Features</a>
-     ·
-    <a href="https://discord.gg/XSWkS2fWJc">Discord Server</a>
-	</p>
+    <a href="https://github.com/ninetailsrabbit/GodotWizard/issues/new?labels=enhancement&template=feature-request.md">Request Features</a>
+  </p>
 </div>
 
 <br>
@@ -20,6 +18,12 @@
 
 This section introduces a collection of helpful utility functions called `Wizards` Unlike most Godot classes, these wizards are static _(don't require instances)_ and don't need to be autoloaded. You can access them from anywhere in your project to perform specific tasks without depending on a particular game context or flow.
 Think of them as magic tools in your coding toolbox!
+
+## How to use
+
+Feel free to take what you need from this collection, as it's not designed to be used entirely at once.
+
+It's not a traditional, structured addon, but rather a set of helper functions that can be useful even for a single function within your project.
 
 - [ArrayWizard 🔲](#arraywizard-)
   - [Flatten](#flatten)
@@ -43,7 +47,7 @@ Think of them as magic tools in your coding toolbox!
   - [Remove files recursive](#remove-files-recursive)
   - [Get .pck files](#get-pck-files)
   - [Load CSV/TSV](#load-csvtsv)
-    - [How to use](#how-to-use)
+    - [How to use](#how-to-use-1)
 - [InputWizard 🎮](#inputwizard-)
   - [Mouse](#mouse)
   - [Keyboard](#keyboard)
