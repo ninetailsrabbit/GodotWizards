@@ -21,13 +21,13 @@
 This section introduces a collection of helpful utility functions called `Wizards` Unlike most Godot classes, these wizards are static _(don't require instances)_ and don't need to be autoloaded. You can access them from anywhere in your project to perform specific tasks without depending on a particular game context or flow.
 Think of them as magic tools in your coding toolbox!
 
-- [ArrayWizard](#arraywizard)
+- [ArrayWizard 🔲](#arraywizard-)
   - [Flatten](#flatten)
   - [Pick random values](#pick-random-values)
   - [Remove duplicates](#remove-duplicates)
   - [Remove falsy values](#remove-falsy-values)
   - [Middle element](#middle-element)
-- [DictWizard](#dictwizard)
+- [DictWizard 📗](#dictwizard-)
   - [Reverse key-value](#reverse-key-value)
   - [Merge recursive](#merge-recursive)
 - [BBcodeWizard](#bbcodewizard)
@@ -113,8 +113,30 @@ Think of them as magic tools in your coding toolbox!
   - [Colors](#colors)
   - [Polygon bounding box](#polygon-bounding-box)
 - [NodeWizard ⭕](#nodewizard-)
+  - [Direction to](#direction-to)
+  - [Distance to](#distance-to)
+  - [Facing](#facing)
+  - [Childrens](#childrens)
+    - [Get all childrens](#get-all-childrens)
+    - [Get last child](#get-last-child)
+    - [First child node in group](#first-child-node-in-group)
+    - [Group](#group)
+    - [Meta](#meta)
+  - [Ancestors](#ancestors)
+    - [Get all ancestors](#get-all-ancestors)
+  - [Visibility](#visibility)
+  - [Removal](#removal)
+    - [Remove](#remove)
+    - [Remove and queue free childrens](#remove-and-queue-free-childrens)
+  - [Editor](#editor)
+  - [Get tree depth](#get-tree-depth)
+  - [Get absolute Z index](#get-absolute-z-index)
+  - [Node validation](#node-validation)
+  - [Nearest \& Farthest](#nearest--farthest)
+  - [Screen](#screen)
+  - [UI node is hovered](#ui-node-is-hovered)
 
-# ArrayWizard
+# ArrayWizard 🔲
 
 Contains helper functions to deal with arrays and common operations that will appear naturally in the game development workflow.
 
@@ -183,7 +205,7 @@ ArrayWizard.middle_element([1, 2, 3, 4, 5]) // 3
 ArrayWizard.middle_element([1, 2, 3, 4]) // 2
 ```
 
-# DictWizard
+# DictWizard 📗
 
 Helps to manipulate complex dictionaries
 
@@ -1491,3 +1513,256 @@ A common use case it's convert color data from textures or materials into vector
 Takes a `PackedVector2Array` as input, which represents a polygon defined by an array of 2D vectors _(points)_. The function's purpose is to calculate the bounding box rectangle that encloses the entire polygon.
 
 # NodeWizard ⭕
+
+NodeWizard is a static class in Godot that acts as your toolbox for simplifying common node operations. It provides convenient methods to handle tasks you'd typically perform using native methods like `direction_to` and `distance_to`.
+
+However, `NodeWizard` offers a more user-friendly approach: instead of working directly with vectors, you can interact with nodes themselves.
+
+Think of it as syntactic sugar – it sweetens the code by allowing you to reference nodes directly, making your code more readable and easier to maintain.
+
+Here's a breakdown of the benefits:
+
+- **Simplified Node Operations:** Forget complex vector calculations! NodeWizard lets you interact with nodes directly, streamlining your code.
+
+- **Improved Readability:** Code that references nodes by name is easier to understand and follow.
+
+- **Reduced Error Potential:** Working directly with nodes can minimize errors that might arise from manual vector calculations
+
+## Direction to
+
+`static func local_direction_to_v2(a: Node2D, b: Node2D) -> Vector2`
+
+`static func local_direction_to_v3(a: Node3D, b: Node3D) -> Vector3`
+
+`static func global_direction_to_v2(a: Node2D, b: Node2D) -> Vector2`
+
+`static func global_direction_to_v3(a: Node3D, b: Node3D) -> Vector3`
+
+Function that provides a shorcut of `direction_to`
+
+```swift
+var a: Node2D = $NodeA
+var b: Node2D = $NodeB
+
+// Instead of this
+a.global_position.direction_to(b.global_position)
+
+// You can write this
+NodeWizard.global_direction_to_v2(a, b)
+```
+
+## Distance to
+
+`static func local_distance_to_v2(a: Node2D, b: Node2D) -> float`
+
+`static func local_distance_to_v3(a: Node3D, b: Node3D) -> float`
+
+`static func global_distance_to_v2(a: Node2D, b: Node2D) -> float`
+
+`static func global_distance_to_v3(a: Node2D, b: Node2D) -> float`
+
+Function that provides a shorcut of `distance_to`
+
+```swift
+var a: Node2D = $NodeA
+var b: Node2D = $NodeB
+
+// Instead of this
+a.global_position.distance_to(b.global_position)
+
+// You can write this
+NodeWizard.global_distance_to_v2(a, b)
+```
+
+## Facing
+
+`static func a_is_facing_b(a: Node3D, b: Node3D) -> bool`
+
+Detects if the **node A** is facing the **node B** in a 3D space.
+
+## Childrens
+
+### Get all childrens
+
+`static func get_all_children(from_node: Node) -> Array`
+
+Get all the childrens from this node recursively
+
+### Get last child
+
+`static func get_last_child(node: Node)`
+
+Get the latest child in the scene tree from this node
+
+### First child node in group
+
+`static func first_child_node_in_group(node: Node, group: String)`
+
+Find the first child node found with the provided group passed as parameter.
+
+### Group
+
+`static func add_all_childrens_to_group(node: Node, group: String, filter: Array[Node] = []) -> void`
+
+### Meta
+
+`static func add_meta_to_all_children(node: Node, meta: String, value: Variant, filter: Array[Node] = []) -> void`
+
+`static func remove_meta_from_all_children(node: Node, meta: String) -> void`
+
+## Ancestors
+
+### Get all ancestors
+
+`static func get_all_ancestors(from_node: Node) -> Array`
+
+Get all the ancestors from this node recursively
+
+## Visibility
+
+`static func hide_nodes(nodes: Array[Node] = []) -> void`
+
+`static func show_nodes(nodes: Array[Node] = []) -> void`
+
+Hide or show all the nodes passed as parameter. If the node does not have the `show()` `hide()` method nothings happens and no error is returned.
+
+## Removal
+
+### Remove
+
+`static func remove(node: Node) -> void`
+
+Remove safely the node doing a few checks before doing the action.
+
+### Remove and queue free childrens
+
+`static func remove_and_queue_free_children(node: Node, except: Array = []) -> void`
+
+`static func queue_free_children(node: Node, except: Array = []) -> void`
+
+## Editor
+
+`static func set_owner_to_edited_scene_root(node: Node) -> void`
+
+Set the owner of this node to scene root only if it's running on the editor. If not, nothing happens.
+
+## Get tree depth
+
+`static func get_tree_depth(node: Node) -> int`
+
+Calculate how depth is the given node on the current scene tree
+
+## Get absolute Z index
+
+`static func get_absolute_z_index(node: Node2D) -> int`
+
+While individual nodes have their own z-index values, the function calculates the `absolute z-index`, which reflects the node's final position in the overall stacking order.
+
+By knowing the absolute z-index, you can ensure that specific nodes are always drawn on top of others, regardless of their parent-child relationships.
+
+---
+
+In Godot, the z-index property of a 2D node determines its position in the layering system.
+
+Nodes with higher z-indices are drawn on top of nodes with lower z-indices, controlling the visual order of overlapping element.
+
+Godot offers two types of z-index behavior:
+
+- **Relative:** The z-index only affects the layering within its immediate parent node.
+- **Absolute:** The z-index is considered relative to the entire scene root, making it independent of parent nodes.
+
+---
+
+## Node validation
+
+`static func is_node_valid(node: Node) -> bool`
+
+A more concise validation to know if a node is valid to be manipulated.
+
+## Nearest & Farthest
+
+`static func get_nearest_node_by_distance(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary`
+
+`static func get_nearest_nodes_sorted_by_distance(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Array`
+
+`static func get_farthest_node_by_distance(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary`
+
+These functions help you locate nodes within a specific distance range relative to a given point. The nodes in the array needs to inherit from `Node2D` or `Node3D` as they have `global_position` vectors in the world although these functions internally apply the necessary filters to only work with valid nodes.
+
+**Parameters:**
+
+- `from (Vector2)`: The reference point from which to measure distances.
+
+- `nodes (Array)`: An array of nodes to search through.
+
+- `min_distance (float)`: Optional minimum distance threshold _(defaults to null in nearest and 0.0 in farthest)_.
+
+- `max_range (float)`: Optional maximum distance threshold _(defaults to 9999, effectively no upper limit)_.
+
+**Return:**
+
+Both functions return a dictionary with two keys:
+
+- `target`: The nearest/farthest node found within the distance range _(or null if none is found)._
+
+- `distance`: The distance between the from point and the found node _(or null if none is found)._
+
+## Screen
+
+`static func on_screen(node: Node, margin : float = 16.0 ) -> bool`
+
+This function is useful to know if the node it's on the current viewport.
+
+`static func screen_position(node: Node) -> Vector2`
+
+Return the current screen position for the given node.
+
+## UI node is hovered
+
+`static func ui_node_is_hovered(control: Control) -> bool`
+
+A more robust approach to know if a node that inherits from Control it's hovered.
+
+You can apply the next meta tags included in this wizard to the nodes you don't want to be detected as hovered from this function:
+
+```swift
+const COVERED_BY_POPUP := "covered_by_popup"
+const GAMEPLAY_COVERED := "gameplay_covered"
+const CONSOLE_COVERED := "console_covered"
+const IGNORE_MOUSE := "ignore_mouse"
+
+
+const MOUSE_FILTER_META := [
+	COVERED_BY_POPUP,
+	GAMEPLAY_COVERED,
+	CONSOLE_COVERED,
+	IGNORE_MOUSE,
+]
+
+```
+
+It performs various checks to ensure the control is in a valid state for hover detection:
+
+- **Validity Check:** It verifies if the control node is still a valid instance, preventing errors from accessing deleted nodes.
+- **Visibility Check:** It ensures the control node is visible in the scene tree, as invisible nodes cannot be hovered over.
+- **Mouse Filter Check:** It checks if the control has any meta flags related to mouse filtering, which might prevent hover events.
+
+**Handling Scroll Containers:**
+
+It specifically checks for `ScrollContainer` parent nodes:
+
+If the control is within a `ScrollContainer`, it verifies that the mouse position is actually within the container's visible rectangle.
+
+This is crucial because hovering within the `ScrollContainer` might not necessarily translate to hovering over the control itself.
+
+**Handling SubViewportContainers:**
+
+It considers situations where the control is nested within a `SubViewportContainer`:
+
+It checks if the `SubViewportContainer` is visible in the scene tree, as invisible containers cannot contribute to hover detection.
+
+**Accurate Hover Detection:**
+
+It uses `get_global_rect().grow(1)` to expand the control's rectangle by one pixel.
+
+This accounts for potential inaccuracies in mouse position detection, ensuring that hovering near the edges of the control is also considered.
