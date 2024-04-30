@@ -78,31 +78,65 @@ static func get_all_ancestors(from_node: Node) -> Array:
 	return ancestors
 	
 
-## Only works for native Godot Classes like Area3D, Camera2D, etc.
-static func find_nodes_of_class(node: Node, class_to_find: Node, result: Array = []):
-	var childrens = node.get_children(true)
+## Only works for native custom class not for GDScriptNativeClass
+## Example NodeWizard.find_nodes_of_custom_class(self, MachineState)
+static func find_nodes_of_custom_class(node: Node, class_to_find: GDScript) -> Array:
+	var  result := []
 	
+	var childrens = node.get_children(true)
+
 	for child in childrens:
-		if child.is_class(class_to_find.get_class()):
+		if child.get_script() == class_to_find:
 			result.append(child)
 		else:
-			find_nodes_of_class(child, class_to_find, result)
+			result.append_array(find_nodes_of_custom_class(child, class_to_find))
+	
+	return result
+	
+## Only works for native nodes like Area2D, Camera2D, etc.
+## Example NodeWizard.find_nodes_of_type(self, Control.new())
+static func find_nodes_of_type(node: Node, type_to_find: Node) -> Array:
+	var  result := []
+	
+	var childrens = node.get_children(true)
 
+	for child in childrens:
+		if child.is_class(type_to_find.get_class()):
+			result.append(child)
+		else:
+			result.append_array(find_nodes_of_type(child, type_to_find))
+	
+	return result
+	
 	
 ## Only works for native Godot Classes like Area3D, Camera2D, etc.
-static func first_node_of_class(node: Node, class_to_find: Node):
+## Example NodeWizard.first_node_of_type(self, Control.new())
+static func first_node_of_type(node: Node, type_to_find: Node):
 	if node.get_child_count() == 0:
 		return null
 
 	for child in node.get_children():
-		if child.is_class(class_to_find.get_class()):
-			class_to_find.free()
+		if child.is_class(type_to_find.get_class()):
+			type_to_find.free()
 			return child
 	
-	class_to_find.free()
+	type_to_find.free()
+	
 	return null
 	
+## Only works for native custom class not for GDScriptNativeClass
+## Example NodeWizard.first_node_of_custom_class(self, MachineState)
+static func first_node_of_custom_class(node: Node, class_to_find: GDScript):
+	if node.get_child_count() == 0:
+		return null
 
+	for child in node.get_children():
+		if child.get_script() == class_to_find:
+			return child
+	
+	return null
+	
+	
 static func get_last_child(node: Node):
 	var node_count := node.get_child_count()
 	
@@ -308,5 +342,3 @@ static func ui_node_is_hovered(control: Control) -> bool:
 			parent = parent.get_parent()
 	
 	return control.get_global_rect().grow(1).has_point(control.get_global_mouse_position())
-
-

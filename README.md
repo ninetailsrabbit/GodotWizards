@@ -116,6 +116,7 @@ Think of them as magic tools in your coding toolbox!
   - [Direction to](#direction-to)
   - [Distance to](#distance-to)
   - [Facing](#facing)
+  - [Search](#search)
   - [Childrens](#childrens)
     - [Get all childrens](#get-all-childrens)
     - [Get last child](#get-last-child)
@@ -1579,6 +1580,30 @@ NodeWizard.global_distance_to_v2(a, b)
 `static func a_is_facing_b(a: Node3D, b: Node3D) -> bool`
 
 Detects if the **node A** is facing the **node B** in a 3D space.
+
+## Search
+
+Functions related to search nodes by type or custom class. When node/s are not found, an empty array or null depending on the function is returned.
+
+The differences between type and custom class is that `type` only can find native GDScript node classes and `custom` can only find custom class that inherits from some sort of node.
+
+`static func find_nodes_of_custom_class(node: Node, class_to_find: Variant) -> Array`
+
+`static func first_node_of_custom_class(node: Node, class_to_find: Variant) -> Variant`
+
+`static func find_nodes_of_type(node: Node, type_to_find: Node) -> Array`
+
+`static func first_node_of_type(node: Node, type_to_find: Node) -> Variant`
+
+```swift
+// By native node type, we need to call new to detect the type, this reference is freed after the execution.
+NodeWizard.find_nodes_of_type(self, Control.new())
+NodeWizard.first_node_of_type(self, Control.new())
+
+// By custom class that inherits from any node
+NodeWizard.find_nodes_of_custom_class(self, MachineState)
+NodeWizard.first_node_of_custom_class(self, MachineState)
+```
 
 ## Childrens
 
