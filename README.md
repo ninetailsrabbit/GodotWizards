@@ -49,17 +49,41 @@ Think of them as magic tools in your coding toolbox!
   - [Keyboard](#keyboard)
   - [Gamepad](#gamepad)
   - [Actions](#actions)
-- [MathWizard](#mathwizard)
+- [MathWizard 🧮](#mathwizard-)
   - [Access to universal constants](#access-to-universal-constants)
-  - [Bias](#bias)
-  - [Sigmoid](#sigmoid)
+  - [Probability](#probability)
+    - [Spread](#spread)
+    - [Chance](#chance)
+    - [Random byte](#random-byte)
+    - [Bias](#bias)
+    - [Sigmoid](#sigmoid)
   - [Factorials](#factorials)
   - [Quartenion to axis angle](#quartenion-to-axis-angle)
   - [Roman numbers](#roman-numbers)
   - [Hexadecimal](#hexadecimal)
   - [Value between](#value-between)
   - [Thousands separator](#thousands-separator)
+  - [Big round](#big-round)
+  - [Average](#average)
+  - [Areas \& Volumes](#areas--volumes)
+  - [Angles](#angles)
+  - [Segment circle intersects](#segment-circle-intersects)
+  - [Segment Rect intersects](#segment-rect-intersects)
+  - [Rect difference](#rect-difference)
 - [StringWizard 🔤](#stringwizard-)
+  - [Access to common constants](#access-to-common-constants)
+  - [Format time](#format-time)
+  - [URL is valid](#url-is-valid)
+  - [Generate random string](#generate-random-string)
+  - [Snake to camel case](#snake-to-camel-case)
+  - [Camel to snake case](#camel-to-snake-case)
+  - [Clean](#clean)
+  - [Wrap text](#wrap-text)
+  - [Integer to ordinal](#integer-to-ordinal)
+  - [Pretty number](#pretty-number)
+  - [Number to Binary](#number-to-binary)
+  - [Strip bbcode](#strip-bbcode)
+  - [Strip file paths](#strip-file-paths)
 - [VectorWizard ➖](#vectorwizard-)
 - [NodeWizard ⭕](#nodewizard-)
 
@@ -469,7 +493,7 @@ Releases held input actions. This is useful for situations where you want to int
 
 `static func get_all_inputs_for_action(action: String) -> Array[InputEvent]`
 
-# MathWizard
+# MathWizard 🧮
 
 ## Access to universal constants
 
@@ -515,7 +539,43 @@ const FRANSEN_ROBINSON_CONSTANT = 2.807770 # represents the area between the gra
 const HEX_CHARACTERS = "0123456789ABCDEF"
 ```
 
-## Bias
+## Probability
+
+### Spread
+
+`static func spread(scale: float = 1.0) -> float`
+
+This function generates a random number between -1 and 1, scaled by the provided scale factor.
+
+The scale parameter allows you to control the range of the generated random values.
+
+```swift
+// Generate a random number between -1 and 1 (default scale)
+random_value = spread()
+
+// Generate a random number between -2 and 2 with a larger scale
+random_value = spread(2.0)
+```
+
+### Chance
+
+`static func chance(probability_chance: float = 0.5) -> bool`
+
+The `probability_chance` parameter specifies the likelihood of the function returning True. A value of 0.5 indicates a 50% chance of True.
+
+```swift
+// Check if a coin toss simulation results in heads (50% chance)
+heads = chance(0.5)
+
+// Check if a die roll simulation results in a 6 (approximately 16.67% chance)
+rolled_a_six = chance(1.0 / 6)
+```
+
+### Random byte
+
+`static func random_byte() -> int`
+
+### Bias
 
 `static func bias(x : float, _bias : float) -> float`
 
@@ -529,7 +589,7 @@ It could represent a probability, a random number between 0 and 1, or any other 
 By adjusting the bias value, you can control how much the dice is skewed towards higher numbers.
 A bias of 0.5 would result in a fair die roll. A bias closer to 1 would make it more likely to roll higher numbers.
 
-## Sigmoid
+### Sigmoid
 
 `static func sigmoid(x: float, scaling_factor: float = 0.0) -> float`
 
@@ -654,10 +714,285 @@ MathWizard.add_thousand_separator(1000) ## 1,000
 MathWizard.add_thousand_separator(1000000) ## 1,000,000
 MathWizard.add_thousand_separator(9999448828) ## 1,289,128,918,921
 MathWizard.add_thousand_separator(1289128918921) ## 9,999,448,828
+```
+
+## Big round
+
+`static func big_round(num: int) -> int`
+
+This function rounds a large integer number to the nearest significant digit based on its magnitude.
+
+```swift
+// Round 1234567890 to the nearest billion
+MathWizard.big_round(1234567890)  // Output: 1000000000
+
+// Round 987654321 to the nearest million
+MathWizard.big_round(987654321)  // Output: 987000000
+
+// Round 12345678 to the nearest thousand
+MathWizard.big_round(12345678)  // Output: 12345000
+
+// Round 12345 to the nearest ten
+MathWizard.big_round(12345)  // Output: 12340
+
+// No rounding for numbers below 10,000
+MathWizard.big_round(5678)  // Output: 5678
+```
+
+## Average
+
+`static func average(numbers: Array = []) -> float`
+
+The **middle** value in a set of numbers
+
+For example, the mean average of the numbers 2, 3, 4, 7, and 9 _(summing to 25)_ is 5
+
+```swift
+MathWizard.average([2, 3, 4, 7, 9]) // 5
+```
+
+## Areas & Volumes
+
+`static func volume_of_sphere(radius: float) -> float`
+
+`static func volume_of_hollow_sphere(outer_radius: float, inner_radius: float) -> float`
+
+`static func area_of_circle(radius: float) -> float`
+
+`static func area_of_triangle(base: float, perpendicular_height: float) -> float`
+
+## Angles
+
+`static func angle_from_cardinal_direction(cardinal_direction: float) -> float`
+
+This function takes a cardinal direction represented as a floating-point angle in radians and converts it to a standardized angle within the range of -π/4 to π/4.
+
+```swift
+North (N): 0° = 360°
+East (E): 90°
+South (S): 180°
+West (W): 270°
+
+Northeast (NE), 45°, halfway between north and east, is the opposite of southwest.
+Southeast (SE), 135°, halfway between south and east, is the opposite of northwest.
+Southwest (SW), 225°, halfway between south and west, is the opposite of northeast.
+Northwest (NW), 315°, halfway between north and west, is the opposite of southeast.
+```
+
+**Example of Use:**
+
+Imagine you have a character in a game facing a direction represented by an angle in radians. This function can be used to convert that angle to a standardized format within the range of -π/4 to π/4
+
+```swift
+var direction_angle = deg_to_rad(270)  // Convert degrees to radians
+var standardized_angle = MathWizard.angle_from_cardinal_direction(direction_angle)
+```
+
+`static func limit_horizontal_angle(direction: Vector2, limit_angle: float) -> Vector2`
+
+This function takes a `Vector2` representing a direction and a `limit_angle` in radians. It then modifies the direction vector by limiting its horizontal angle within the specified range.
+
+**Example of use:**
+
+Imagine you have a character aiming a weapon with a limited horizontal firing range. This function can be used to ensure the aiming direction stays within the allowed range while preserving the vertical direction
+
+```swift
+// Character aiming direction with an angle of 120 degrees (slightly outside the limit)
+var aiming_direction = Vector2(1, -0.5)  // Extracting direction from vector
+var max_horizontal_angle = PI / 3  // Limit angle to 60 degrees
+var limited_direction = MathWizard.limit_horizontal_angle(aiming_direction, max_horizontal_angle)
+
+print("Limited aiming direction:", limited_direction)  // Output: (0.5, -0.866)
+```
+
+## Segment circle intersects
+
+`static func segment_circle_intersects(start, end, center, radius)`
+
+[Circle line segment collision detection](https://stackoverflow.com/questions/1073336/circle-line-segment-collision-detection-algorithm)
+
+This function checks for intersections between a line segment and a circle in 2D space.
+
+Returns an array containing the `Vector2` coordinates of all valid intersection points between the line segment and the circle. If there are no intersections, an empty array is returned.
+
+## Segment Rect intersects
+
+`static func segment_rect_intersects(a, b, rect) -> Array`
+
+This function determines the intersection point(s) between a line segment and a rectangle in 2D space, returning them in order of increasing distance from the segment's starting point.
+
+Returns the points array containing the intersection point(s) in order of increasing distance from the starting point `a` of the line segment. If no intersections are found, the returned array will be empty
+
+## Rect difference
+
+`static func rect_difference(r1: Rect2, r2: Rect2)`
+
+[Rectangle difference](https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Rectangle_difference)
+
+This function calculates the difference between two rectangles in 2D space, returning an array of Rect2 objects representing the remaining area after removing the overlapping region
+
+Returns the result array containing `Rect2` objects representing the remaining rectangular areas after removing the overlapping region between `r1` and `r2`. If there's no overlap, **the array will be empty.**
+
+# StringWizard 🔤
+
+This wizard provides helpful functions for manipulate or generate strings.
+
+## Access to common constants
+
+There is some common constants that can be accessed from this class and are useful to work with strings
+
+```swift
+const ASCII_ALPHANUMERIC = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+const ASCII_LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const ASCII_LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+const ASCII_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const ASCII_DIGITS = "0123456789"
+const ASCII_HEXDIGITS = "0123456789ABCDEF"
+const ASCII_PUNCTUATION =  "!\"#$%&'()*+, -./:;<=>?@[\\]^_`{|}~"
+```
+
+## Format time
+
+`static func format_seconds(time: float, use_milliseconds: bool = false) -> String`
+
+Formats a time value into a string representation of minutes, seconds, and optionally milliseconds.
+
+- `time (float)`: The time value to format, in seconds.
+- `use_milliseconds (bool, optional)`: Whether to include milliseconds in the formatted string. Defaults to false.
+
+**Returns:**
+
+A string representation of the formatted time in the format "MM:SS" or "MM:SS:mm", depending on the value of use_milliseconds.
+
+```swift
+// Format 123.456 seconds without milliseconds
+var formatted_time = StringWizard.format_seconds(123.456)
+// Result: "02:03"
+
+// Format 123.456 seconds with milliseconds
+var formatted_time_with_ms =  StringWizard.format_seconds(123.456, true)
+// Result: "02:03:45"
+```
+
+## URL is valid
+
+`static func is_valid_url(url: String) -> bool`
+
+## Generate random string
+
+`static func generate_random_string(length: int = 25, characters: String = ASCII_ALPHANUMERIC) -> String`
+
+Generates a random string of a specified length using the provided character set. Defaults to a length of 25 and ASCII_ALPHANUMERIC constant.
+
+To ensure a valid string, **it requires a length greater than 1 and at least one valid character**. Otherwise, it returns `null`.
+
+## Snake to camel case
+
+`static func snake_to_camel_case(screaming_snake_case: String) -> String`
+
+Converts snake_case_string or SCREAMING_SNAKE_CASE into PascalCaseString
+
+## Camel to snake case
+
+`static func camel_to_snake(camel_string: String) -> String`
+
+Converts PascalCaseString into snake_case_string
+
+## Clean
+
+`static func clean(string: String) -> String`
+
+Clean a string by removing characters that are not letters _(uppercase or lowercase)_ or spaces, tabs or newlines. This returns a new string and does not modify the original.
+
+## Wrap text
+
+`static func wrap_text(text: String = "", max_line_length: int = 120)`
+
+Wraps the provided text into multiple lines if it exceeds the specified `max_line_length`
+
+## Integer to ordinal
+
+`static func integer_to_ordinal(number: int) -> String`
+
+Converts the number into the ordinal representation, useful to display positions on a leaderboard or inside a car race.
+
+- **Units digit only:**
+  If the units digit is 1, 2, or 3, the corresponding suffix _("st", "nd", "rd")_ is added.
+  Otherwise, "th" is added.
+- **Tens digit is 1:**
+  If the tens digit is 1, "th" is added regardless of the units digit _(except for the special cases of 11, 12, and 13)_.
+  Special cases:
+
+The function handles specific cases where the last two digits are 11 _(e.g., 11th, 211th)_, 12 _(e.g., 12th, 212th)_, or 13 _(e.g., 13th, 213th)_ due to their unique pronunciations.
+
+```swift
+
+ordinal_representation = StringWizard.integer_to_ordinal(1) // 1st
+ordinal_representation = StringWizard.integer_to_ordinal(2) // 2nd
+ordinal_representation = StringWizard.integer_to_ordinal(3) // 3rd
+ordinal_representation = StringWizard.integer_to_ordinal(4) // 4th
+
+
+ordinal_representation = StringWizard.integer_to_ordinal(21)
+//Output: 21st
+
+ordinal_representation = StringWizard.integer_to_ordinal(32)
+//Output: 32nd
+
+ordinal_representation = StringWizard.integer_to_ordinal(43)
+//Output: 43rd
+
+ordinal_representation = StringWizard.integer_to_ordinal(54)
+//Output: 54th
+
+ordinal_representation = StringWizard.integer_to_ordinal(101)
+//Output: 101st
+
+ordinal_representation = StringWizard.integer_to_ordinal(111)
+//Output: 111th
+
+ordinal_representation = StringWizard.integer_to_ordinal(212)
+//Output: 212th
 
 ```
 
-# StringWizard 🔤
+## Pretty number
+
+For more complex cases take a look at this addon [GodotBigNumberClass](https://github.com/ChronoDK/GodotBigNumberClass)
+
+`static func pretty_number(number: float, suffixes: Array[String] = ["", "K", "M", "B", "T"]) -> String`
+
+This function formats a floating-point number into a human-readable string with appropriate suffixes based on its magnitude _(thousands, millions, billions, etc.)_
+
+It allows to pass more suffixes in Array[String] format. They are sorted by exponent, so later suffixes are applied on larger exponents.
+
+```swift
+StringWizard.pretty_number(1234.56) // 1.2K
+StringWizard.pretty_number(1234567.89) // 1.2M
+StringWizard.pretty_number(1234567890.123) // 1.2B
+```
+
+## Number to Binary
+
+`static func to_binary_string(num: int) -> String`
+
+```swift
+StringWizard.to_binary_string(5) // 101
+StringWizard.to_binary_string(13) // 1101
+StringWizard.to_binary_string(255) // 11111111
+```
+
+## Strip bbcode
+
+`static func strip_bbcode(source:String) -> String`
+
+Removes the bbcode tags for the given text.
+
+## Strip file paths
+
+`static func strip_filepaths(source: String) -> String`
+
+Removes any text starting with `"res://"` followed by one or more non-space characters.
 
 # VectorWizard ➖
 

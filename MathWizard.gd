@@ -210,6 +210,7 @@ static func area_of_triangle(base: float, perpendicular_height: float) -> float:
 
 
 ## This function assumes that the cardinal direction is in radians unit.
+## https://en.wikipedia.org/wiki/Cardinal_direction
 static func angle_from_cardinal_direction(cardinal_direction: float) -> float:
 	var half_pi = PI / 2
 	
@@ -235,7 +236,7 @@ static func limit_horizontal_angle(direction: Vector2, limit_angle: float) -> Ve
 
 
 # https://stackoverflow.com/questions/1073336/circle-line-segment-collision-detection-algorithm
-static func segment_circle_intersects(start, end, center, radius):
+static func segment_circle_intersects(start, end, center, radius) -> Array:
 	var d = end - start
 	var f = start - center
 	
@@ -278,7 +279,7 @@ static func segment_rect_intersects(a, b, rect) -> Array:
 	return points
 	
 #https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Rectangle_difference	
-static func rect_difference(r1: Rect2, r2: Rect2):
+static func rect_difference(r1: Rect2, r2: Rect2) -> Array:
 	var result = []
 	var top_height = r2.position.y - r1.position.y
 	
