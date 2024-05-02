@@ -23,15 +23,16 @@ Think of them as magic tools in your coding toolbox!
 
 - Check out my [gists](https://gist.github.com/ninetailsrabbit) You might find some interesting components or configuration files there.
 - Effortless loot generation [Lootie](https://github.com/ninetailsrabbit/Lootie)
+- Global Camera Transition [CameraShifter](https://github.com/ninetailsrabbit/CameraShifter)
 
-## How to use
+# How to use
 
 Feel free to take what you need from this collection, as it's not designed to be used entirely at once.
 
 It's not a traditional, structured addon, but rather a set of helper functions that can be useful even for a single function within your project.
 
 - [Other plugins 🕵️](#other-plugins-️)
-  - [How to use](#how-to-use)
+- [How to use](#how-to-use)
 - [General utilities 🧰](#general-utilities-)
   - [Bitstream](#bitstream)
   - [UUID](#uuid)
