@@ -19,12 +19,19 @@
 This section introduces a collection of helpful utility functions called `Wizards` Unlike most Godot classes, these wizards are static _(don't require instances)_ and don't need to be autoloaded. You can access them from anywhere in your project to perform specific tasks without depending on a particular game context or flow.
 Think of them as magic tools in your coding toolbox!
 
+# Other plugins 🕵️
+
+- Check out my [gists](https://gist.github.com/ninetailsrabbit) You might find some interesting components or configuration files there.
+- Effortless loot generation [Lootie](https://github.com/ninetailsrabbit/Lootie)
+
 ## How to use
 
 Feel free to take what you need from this collection, as it's not designed to be used entirely at once.
 
 It's not a traditional, structured addon, but rather a set of helper functions that can be useful even for a single function within your project.
 
+- [Other plugins 🕵️](#other-plugins-️)
+  - [How to use](#how-to-use)
 - [General utilities 🧰](#general-utilities-)
   - [Bitstream](#bitstream)
   - [UUID](#uuid)
